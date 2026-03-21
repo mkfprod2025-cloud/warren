@@ -1,0 +1,11 @@
+Agis en tant que développeur Python expert en trading algorithmique. Développe un bot de trading autonome pour BitMart (Futures) contrôlé par une interface web Streamlit.
+
+Technologies : Python, `bitmart-python-sdk-api`, `google-generativeai`, `python-dotenv`, `streamlit`, `pandas`.
+
+Architecture et logique :
+1. Interface Streamlit (Panneau de contrôle) : Créer une barre latérale pour : Démarrer/Arrêter, Saisir l'actif (ex: BTC/USDT), Fixer l'objectif de rendement (%) et la date limite.
+2. Gestion de l'état : Utiliser un fichier `config.json` local mis à jour par l'interface pour transmettre les paramètres au bot en arrière-plan en temps réel.
+3. Collecte de données enrichie : Récupérer les données du marché (prix actuel, carnet d'ordres, volume) et l'historique récent (OHLCV) via l'API BitMart Futures.
+4. IA Autonome (Gemini) : Envoyer ces données avec ce prompt système : "Tu es un trader autonome sur contrats à terme. Actif : {actif}. Objectif : {rendement}% ROI avant le {date}. Données du marché : {donnees_enrichies}. Tu as carte blanche sur la stratégie et le levier. Gère ton risque pour éviter la liquidation. Réponds strictement en JSON : {'raisonnement': 'explication de ton choix', 'action': 'LONG'|'SHORT'|'CLOSE'|'HOLD', 'levier': entier, 'pourcentage_capital': entier}."
+5. Exécution : Analyser le JSON et exécuter l'ordre via l'API BitMart.
+6. Affichage principal Streamlit : Afficher le statut, le PNL en direct, les positions ouvertes, et un tableau d'historique incluant le "raisonnement" de l'IA pour chaque trade.
