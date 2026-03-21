@@ -1,0 +1,38 @@
+name: Warren Bot Runner
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # S'exécute toutes les 15 minutes
+  workflow_dispatch: # Permet de le lancer manuellement
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Warren Bot Cycle
+        env:
+          BITMART_API_KEY: ${{ secrets.BITMART_API_KEY }}
+          BITMART_SECRET: ${{ secrets.BITMART_SECRET }}
+          BITMART_MEMO: ${{ secrets.BITMART_MEMO }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python bot.py --single-run
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "Warren Bot"
+          git config --global user.email "warren-bot@users.noreply.github.com"
+          git add trades_history.json positions.json config.json
+          git commit -m "Warren: Mise à jour automatique des trades et positions" || echo "No changes to commit"
+          git push

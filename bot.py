@@ -213,20 +213,30 @@ def execute(asset, decision, demo_mode, market_data):
     with open(POSITIONS_FILE, "w") as f:
         json.dump(positions, f, indent=4)
 
-def run():
-    print("Warren est en veille...")
+def run(single_run=False):
+    if not single_run:
+        print("Warren est en veille...")
+
     while True:
         config = get_config()
         if not config.get("bot_running", False):
+            if single_run: return
             time.sleep(10)
             continue
-            
+
         data = get_market_data(config["asset"])
         if data:
             decision = ask_gemini(config["asset"], config, data)
-            execute(config["asset"], decision, config.get("demo_mode", True))
-        
+            execute(config["asset"], decision, config.get("demo_mode", True), data)
+
+        if single_run:
+            break
+
         time.sleep(300) # Analyse toutes les 5 minutes
 
 if __name__ == "__main__":
-    run()
+    import sys
+    # Si on passe l'argument --single-run, le bot ne fait qu'un cycle
+    is_single = "--single-run" in sys.argv
+    run(single_run=is_single)
+
