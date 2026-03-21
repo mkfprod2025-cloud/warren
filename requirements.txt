@@ -1,3 +1,6 @@
 bitmart-python-sdk-api
 python-dotenv
 google-generativeai
+streamlit
+pandas
+requests
