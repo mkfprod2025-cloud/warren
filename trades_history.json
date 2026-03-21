@@ -1,0 +1,44 @@
+[
+    {
+        "timestamp": "2026-03-21 09:34:31",
+        "action": "HOLD",
+        "levier": 1,
+        "raisonnement": "Erreur IA: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+        "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-21 09:36:03",
+        "action": "HOLD",
+        "levier": 1,
+        "raisonnement": "Erreur IA: Expecting value: line 1 column 1 (char 0)",
+        "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-21 09:37:10",
+        "action": "SHORT",
+        "levier": 8,
+        "raisonnement": "En tant que Warren, un trader expert en Futures, mon objectif est d'atteindre 12.0% de profit sur BTC/USDT avant le 2026-03-21. J'analyse le march\u00e9 actuel pour une d\u00e9cision strat\u00e9gique.\n\n**Analyse des Donn\u00e9es:**\n1.  **Prix Actuel:** 70594.9\n2.  **Plage 24h:** Haut: 71169.2, Bas: 69361.3\n3.  **Tendance sur 3 jours (15min et 1h):** Le prix a connu une forte baisse sur les trois derniers jours, passant d'environ 74000 \u00e0 70594.9. La tendance g\u00e9n\u00e9rale est clairement baissi\u00e8re.\n\n**Analyse Technique Approfondie:**\n*   **Graphique 1h:** La derni\u00e8re bougie horaire (timestamp 1774080000) a ouvert \u00e0 70687.3 et a cl\u00f4tur\u00e9 \u00e0 70594.9, indiquant une pression vendeuse continue sur cette p\u00e9riode. La bougie pr\u00e9c\u00e9dente \u00e9tait \u00e9galement baissi\u00e8re (cl\u00f4ture \u00e0 70687.4).\n*   **Graphique 15min:** La toute derni\u00e8re bougie 15min (timestamp 1774081800) a ouvert \u00e0 70487.5 et a cl\u00f4tur\u00e9 \u00e0 70594.9. C'est une bougie haussi\u00e8re, mais avec un volume (649350) nettement inf\u00e9rieur \u00e0 la bougie 15min pr\u00e9c\u00e9dente (volume 1618330) qui \u00e9tait baissi\u00e8re (70660.9 -> 70487.4). Ce rebond manque de conviction et semble \u00eatre une correction mineure dans une tendance baissi\u00e8re plus large.\n*   **Niveaux Cl\u00e9s:**\n    *   **R\u00e9sistance Imm\u00e9diate:** Le 'high' de la derni\u00e8re bougie 15min est 70598.8, juste au-dessus du prix actuel, sugg\u00e9rant une r\u00e9sistance tr\u00e8s proche. Les hauts r\u00e9cents des bougies horaires et 15min indiquent une zone de r\u00e9sistance autour de 70700 - 70800. La r\u00e9sistance majeure est le haut 24h \u00e0 71169.2.\n    *   **Support Imm\u00e9diat:** Le 'low' de la derni\u00e8re bougie 15min est 70454.6. Un support important se trouve autour de 70450-70500. En dessous, on observe un support \u00e0 69940.5 (ancien point bas significatif) et le bas 24h \u00e0 69361.3.\n\n**Strat\u00e9gie:**\nMalgr\u00e9 un l\u00e9ger rebond sur la derni\u00e8re bougie 15min, la tendance dominante sur l'heure et sur les derniers jours est baissi\u00e8re. Le volume de ce rebond est faible, ce qui n'inspire pas confiance pour un retournement haussier. Le prix actuel est situ\u00e9 juste sous une r\u00e9sistance imm\u00e9diate et la cl\u00f4ture de la derni\u00e8re bougie 1h est baissi\u00e8re. Je m'attends \u00e0 ce que la pression vendeuse reprenne ou se maintienne, poussant le prix \u00e0 tester les supports inf\u00e9rieurs. Une position SHORT semble la plus appropri\u00e9e pour capitaliser sur la continuation de la tendance baissi\u00e8re \u00e0 court terme.\n\n**Gestion du Risque:**\nUn levier de 8x est mod\u00e9r\u00e9 mais suffisant pour amplifier les gains potentiels dans un march\u00e9 directionnel. L'allocation de 30% du capital permet de conserver des liquidit\u00e9s pour d'autres opportunit\u00e9s ou pour g\u00e9rer la position en cas de mouvement inattendu.",
+        "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-21 09:42:40",
+        "action": "SHORT",
+        "levier": 12,
+        "raisonnement": "L'analyse sur les 3 derniers jours montre une nette tendance baissi\u00e8re sur BTC/USDT, le prix ayant chut\u00e9 de pr\u00e8s de 74000 \u00e0 la fourchette actuelle. Le prix actuel de 70587.7 se situe dans la moiti\u00e9 sup\u00e9rieure de la fourchette 24h (69361.3 - 71131). \n\nSur le graphique 1h, apr\u00e8s une p\u00e9riode de consolidation autour de 69500-70000, le prix a tent\u00e9 un rebond vers les 70700-70800, mais la derni\u00e8re bougie horaire a cl\u00f4tur\u00e9 en baisse \u00e0 70587.8, juste apr\u00e8s une ouverture \u00e0 70687.3. Ceci indique une difficult\u00e9 \u00e0 maintenir les gains. \n\nSur le graphique 15min, nous observons une forte volatilit\u00e9. Le prix a r\u00e9cemment connu une chute notable de 70660.9 \u00e0 70487.4, suivie d'un l\u00e9ger rebond \u00e0 70587.8. Le volume de ce rebond est inf\u00e9rieur \u00e0 celui de la chute pr\u00e9c\u00e9dente, ce qui sugg\u00e8re une faiblesse de l'\u00e9lan acheteur. \n\nSupports identifi\u00e9s : \n- Support imm\u00e9diat : autour de 70480 - 70500 (point bas du rebond r\u00e9cent sur 15min).\n- Support majeur : la zone du bas 24h entre 69300 et 69700, avec un point cl\u00e9 \u00e0 69361.3.\n\nR\u00e9sistances identifi\u00e9es : \n- R\u00e9sistance imm\u00e9diate : autour de 70700 - 70840 (plusieurs rejets r\u00e9cents sur 15min).\n- R\u00e9sistance majeure : autour de 71100 - 71300 (haut 24h et anciens sommets horaires).\n\nLe prix actuel (70587.7) se situe juste au-dessus d'un support mineur, mais la tendance g\u00e9n\u00e9rale reste baissi\u00e8re et le rebond r\u00e9cent manque de conviction (volume faible). Une continuation de la baisse est plus probable, visant les supports inf\u00e9rieurs. J'initie une position SHORT pour accompagner la tendance de fond. La r\u00e9sistance \u00e0 70700-70840 servira de zone de validation de la th\u00e8se baissi\u00e8re ou de potentielle zone de stop-loss.",
+        "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-21 09:47:58",
+        "action": "SHORT",
+        "levier": 15,
+        "raisonnement": "L'analyse des graphiques 15min et 1h sur les 3 derniers jours r\u00e9v\u00e8le une tendance baissi\u00e8re marqu\u00e9e pour BTC/USDT, le prix \u00e9tant pass\u00e9 de sommets autour de 74000 \u00e0 son niveau actuel de 70534.7. Les derni\u00e8res bougies en 15min montrent une pression vendeuse persistante, avec des rejets sur les niveaux de 70700-70800. La derni\u00e8re bougie 1h cl\u00f4ture \u00e9galement de mani\u00e8re tr\u00e8s baissi\u00e8re \u00e0 70534, juste au niveau du prix actuel, confirmant la dynamique. Le prix actuel (70534.7) est l\u00e9g\u00e8rement en dessous de l'open de la derni\u00e8re bougie horaire (70687.3) et se situe dans la moiti\u00e9 inf\u00e9rieure de la plage 24h (71120.3 / 69361.3). Des niveaux de r\u00e9sistance imm\u00e9diats se situent autour de 70700-70800, et plus fortement autour de 71000-71200. Les supports notables sont \u00e0 70300-70400, puis autour de 69900-70000, et le point bas des derni\u00e8res 24h \u00e0 69361.3. Compte tenu de la forte tendance baissi\u00e8re \u00e9tablie et du momentum vendeur actuel, une position SHORT est privil\u00e9gi\u00e9e pour anticiper une continuation vers les supports inf\u00e9rieurs.",
+        "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-21 09:53:33",
+        "action": "HOLD",
+        "levier": 1,
+        "raisonnement": "L'analyse sur 3 jours, tant sur les graphiques 15 minutes qu'horaires, r\u00e9v\u00e8le une tendance baissi\u00e8re pr\u00e9dominante, le prix ayant chut\u00e9 d'environ 74 000 USDT \u00e0 nos niveaux actuels. Cependant, le march\u00e9 a trouv\u00e9 un support significatif au niveau du plus bas sur 24 heures (69361.3), ce qui a provoqu\u00e9 un rebond notable. Ce mouvement haussier r\u00e9cent a montr\u00e9 des signes d'\u00e9puisement, rencontrant une r\u00e9sistance solide autour de la zone des 70800-71000 USDT. Les derni\u00e8res bougies sur 15 minutes indiquent une consolidation lat\u00e9rale et une ind\u00e9cision, avec des tentatives de franchir la r\u00e9sistance imm\u00e9diatement rejet\u00e9es par une pression vendeuse, comme en t\u00e9moignent les r\u00e9centes m\u00e8ches sup\u00e9rieures et les l\u00e9gers replis apr\u00e8s des pics. Le volume est \u00e9galement mitig\u00e9, ne montrant pas de conviction forte pour une cassure. Pour initier une position LONG, j'attendrais une cassure confirm\u00e9e et soutenue au-dessus de la zone de r\u00e9sistance des 70800-71000 USDT, id\u00e9alement accompagn\u00e9e d'une augmentation du volume. Inversement, pour une position SHORT, je chercherais une cassure d\u00e9cisive sous la zone de support imm\u00e9diate autour de 70300-70400 USDT ou une r\u00e9int\u00e9gration du plus bas sur 24h. \u00c9tant donn\u00e9 l'objectif de profit \u00e0 long terme (12% avant le 21 mars 2026), la prudence est de mise. L'absence de signal directionnel clair \u00e0 ce moment pr\u00e9cis me pousse \u00e0 la patience, afin de pr\u00e9server le capital et d'attendre une configuration \u00e0 plus forte probabilit\u00e9.",
+        "mode": "DEMO"
+    }
+]
