@@ -4,63 +4,128 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>WARREN AI - Terminal de Contrôle</title>
+        <title>WARREN AI - Terminal</title>
         <style>
             :root { --bg: #0a0e14; --card: #151b23; --text: #adbac7; --accent: #58a6ff; --green: #3fb950; --red: #f85149; }
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
-            .container { max-width: 1000px; margin: 0 auto; }
+            body { font-family: -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+            .container { max-width: 800px; margin: 0 auto; }
             .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
             .status-badge { padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
             .status-active { background: rgba(63, 185, 80, 0.2); color: var(--green); }
             .status-stopped { background: rgba(248, 81, 73, 0.2); color: var(--red); }
-            .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-            .card { background: var(--card); border: 1px solid #30363d; border-radius: 6px; padding: 15px; }
-            .card h3 { margin: 0; font-size: 14px; color: #768390; }
-            .card p { margin: 10px 0 0; font-size: 24px; font-weight: bold; }
-            .pnl-pos { color: var(--green); } .pnl-neg { color: var(--red); }
-            .brain { margin-top: 20px; background: #1c2128; border-left: 4px solid var(--accent); padding: 15px; border-radius: 4px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-            th, td { text-align: left; padding: 10px; border-bottom: 1px solid #30363d; font-size: 14px; }
-            th { color: #768390; }
-            .reasoning { font-style: italic; color: #8b949e; font-size: 13px; line-height: 1.5; }
+            .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+            .card { background: var(--card); border: 1px solid #30363d; border-radius: 6px; padding: 12px; }
+            .card h3 { margin: 0; font-size: 11px; color: #768390; text-transform: uppercase; }
+            .card p { margin: 5px 0 0; font-size: 18px; font-weight: bold; }
+            .brain { margin-top: 15px; background: #1c2128; border-left: 4px solid var(--accent); padding: 12px; border-radius: 4px; font-size: 13px; }
+            
+            /* CONSOLE DE COMMANDE */
+            .console { margin-top: 20px; background: #0d1117; border: 1px solid var(--accent); border-radius: 8px; padding: 15px; }
+            .console h2 { font-size: 16px; margin-top: 0; color: var(--accent); }
+            .form-group { margin-bottom: 10px; }
+            label { display: block; font-size: 11px; color: #768390; margin-bottom: 4px; }
+            input, select, textarea { width: 100%; background: #1c2128; border: 1px solid #30363d; color: white; padding: 8px; border-radius: 4px; box-sizing: border-box; }
+            .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+            button { flex: 1; padding: 10px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }
+            .btn-start { background: var(--green); color: white; }
+            .btn-stop { background: var(--red); color: white; }
+            .btn-update { background: var(--accent); color: white; }
+            
+            table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
+            th, td { text-align: left; padding: 8px; border-bottom: 1px solid #30363d; }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <h1>📈 WARREN AI <small style="font-size: 12px; color: #768390;">v3.1 Pro</small></h1>
+                <h1>📈 WARREN AI <small style="font-size: 10px; color: #768390;">PRO</small></h1>
                 <span class="status-badge status-active">OPÉRATIONNEL</span>
             </div>
             
             <div class="grid">
-                <div class="card"><h3>Actif Actuel</h3><p>BTC/USDT</p></div>
-                <div class="card"><h3>PNL Net Global</h3><p class="pnl-pos">0.00%</p></div>
+                <div class="card"><h3>Actif</h3><p>BTC/USDT</p></div>
+                <div class="card"><h3>PNL Net</h3><p style="color: var(--green)">0.00%</p></div>
                 <div class="card"><h3>Mode</h3><p>DÉMO</p></div>
                 <div class="card"><h3>Positions</h3><p>1</p></div>
             </div>
 
             <div class="brain">
-                <h3 style="margin:0; color:var(--accent);">🧠 Dernière Analyse (gemini-2.5-flash)</h3>
-                <p class="reasoning">"L'analyse des données de marché sur 15m et 1h révèle une dynamique baissière récente. Le prix actuel (68669.8) est en dessous des prix de clôture récents sur les deux échelles de temps, notamment la dernière bougie de 15m qui a clôturé à 68681.3 après une ouverture à 68779.1. La bougie horaire actuelle a également montré un mouvement de 68761.9 à 68681.3. Cela indique une pression vendeuse persistante. Un mouvement de correction ou une continuation de la tendance baissière est anticipé. J'ouvre une position SHORT avec un levier modéré pour capturer ce mouvement. Le stop-loss est placé au-dessus des résistances récentes (pics autour de 68800-68850), et le take-profit vise un niveau de support inférieur, visant un ratio risque/rendement favorable."</p>
+                <strong style="color:var(--accent);">🧠 Analyse :</strong> "En attente..."
             </div>
+
+            <!-- TÉLÉCOMMANDE -->
+            <div class="console">
+                <h2>🎮 Télécommande Warren</h2>
+                <div class="form-group">
+                    <label>Donnée Macro / Instruction</label>
+                    <textarea id="macro" placeholder="Ex: Marché très volatil, sois prudent..."></textarea>
+                </div>
+                <div class="grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group"><label>Actif</label><input type="text" id="asset" value="BTC/USDT"></div>
+                    <div class="form-group"><label>Objectif %</label><input type="number" id="yield" value="12.0"></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-start" onclick="sendCommand('START')">DÉMARRER</button>
+                    <button class="btn-stop" onclick="sendCommand('STOP')">ARRÊTER</button>
+                    <button class="btn-update" onclick="sendCommand('UPDATE_CONFIG')">MAJ CONFIG</button>
+                </div>
+                <p id="log" style="font-size: 10px; margin-top: 10px; color: #768390; text-align: center;"></p>
+            </div>
+
+            <script>
+                async function sendCommand(cmd) {
+                    const token = localStorage.getItem('GITHUB_TOKEN') || prompt('Entrez votre GITHUB_TOKEN (indispensable pour piloter) :');
+                    if (!token) return;
+                    localStorage.setItem('GITHUB_TOKEN', token);
+                    
+                    const log = document.getElementById('log');
+                    log.innerText = "⏳ Envoi de l'ordre à GitHub...";
+                    
+                    const payload = {
+                        ref: 'main',
+                        inputs: {
+                            command: cmd,
+                            asset: document.getElementById('asset').value,
+                            target_yield: document.getElementById('yield').value,
+                            macro_info: document.getElementById('macro').value,
+                            deadline: '2026-12-31'
+                        }
+                    };
+
+                    try {
+                        const res = await fetch('https://api.github.com/repos/mkfprod2025-cloud/warren/actions/workflows/bot.yml/dispatches', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `token ${token}`,
+                                'Accept': 'application/vnd.github.v3+json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                        
+                        if (res.ok) {
+                            log.innerText = "✅ Ordre reçu ! Warren va se mettre à jour d'ici 1-2 min.";
+                            log.style.color = "var(--green)";
+                        } else {
+                            const err = await res.json();
+                            log.innerText = "❌ Erreur : " + (err.message || 'Inconnue');
+                            log.style.color = "var(--red)";
+                        }
+                    } catch (e) {
+                        log.innerText = "❌ Erreur de connexion : " + e.message;
+                    }
+                }
+            </script>
 
             <h2>📍 Positions Ouvertes</h2>
             <table>
-                <thead><tr><th>Actif</th><th>Sens</th><th>Entrée</th><th>Levier</th><th>SL / TP</th></tr></thead>
+                <thead><tr><th>Actif</th><th>Sens</th><th>Entrée</th><th>Levier</th></tr></thead>
                 <tbody>
-    <tr><td>BTC/USDT</td><td><span class='pnl-neg'>SHORT</span></td><td>68669.8</td><td>10x</td><td>68850.0 / 68400.0</td></tr>
+    <tr><td>BTC/USDT</td><td><span style='color:var(--red)'>SHORT</span></td><td>68669.8</td><td>10x</td></tr>
                 </tbody>
             </table>
-
-            <h2>📜 Historique des Trades</h2>
-            <table>
-                <thead><tr><th>Date</th><th>Action</th><th>Prix</th><th>PNL</th></tr></thead>
-                <tbody>
-    <tr><td>2026-03-22 18:39:34</td><td>SHORT</td><td>68669.8</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-22 18:39:06</td><td>SHORT</td><td>68666.4</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-22 16:01:26</td><td>SHORT</td><td>68753.9</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 19:03:05</td><td>HOLD</td><td>70299.6</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 18:11:33</td><td>LONG</td><td>70213.5</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 18:10:12</td><td>HOLD</td><td>70209.3</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 18:09:55</td><td>HOLD</td><td>70221.4</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 18:06:45</td><td>HOLD</td><td>70283.8</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 18:03:39</td><td>HOLD</td><td>70290.4</td><td class='pnl-neg'>-</td></tr><tr><td>2026-03-21 10:38:34</td><td>HOLD</td><td>70623.2</td><td class='pnl-neg'>-</td></tr>
-                </tbody>
-            </table>
-            <p style="text-align:center; color:#768390; font-size:12px; margin-top:30px;">
-                Généré par Warren AI • Pilotez via GitHub Actions
+            <p style="text-align:center; color:#768390; font-size:10px; margin-top:30px;">
+                Généré par Warren AI • Terminal Interactif v3.1
             </p>
         </div>
     </body>
