@@ -40,5 +40,93 @@
         "levier": 1,
         "raisonnement": "L'analyse sur 3 jours, tant sur les graphiques 15 minutes qu'horaires, r\u00e9v\u00e8le une tendance baissi\u00e8re pr\u00e9dominante, le prix ayant chut\u00e9 d'environ 74 000 USDT \u00e0 nos niveaux actuels. Cependant, le march\u00e9 a trouv\u00e9 un support significatif au niveau du plus bas sur 24 heures (69361.3), ce qui a provoqu\u00e9 un rebond notable. Ce mouvement haussier r\u00e9cent a montr\u00e9 des signes d'\u00e9puisement, rencontrant une r\u00e9sistance solide autour de la zone des 70800-71000 USDT. Les derni\u00e8res bougies sur 15 minutes indiquent une consolidation lat\u00e9rale et une ind\u00e9cision, avec des tentatives de franchir la r\u00e9sistance imm\u00e9diatement rejet\u00e9es par une pression vendeuse, comme en t\u00e9moignent les r\u00e9centes m\u00e8ches sup\u00e9rieures et les l\u00e9gers replis apr\u00e8s des pics. Le volume est \u00e9galement mitig\u00e9, ne montrant pas de conviction forte pour une cassure. Pour initier une position LONG, j'attendrais une cassure confirm\u00e9e et soutenue au-dessus de la zone de r\u00e9sistance des 70800-71000 USDT, id\u00e9alement accompagn\u00e9e d'une augmentation du volume. Inversement, pour une position SHORT, je chercherais une cassure d\u00e9cisive sous la zone de support imm\u00e9diate autour de 70300-70400 USDT ou une r\u00e9int\u00e9gration du plus bas sur 24h. \u00c9tant donn\u00e9 l'objectif de profit \u00e0 long terme (12% avant le 21 mars 2026), la prudence est de mise. L'absence de signal directionnel clair \u00e0 ce moment pr\u00e9cis me pousse \u00e0 la patience, afin de pr\u00e9server le capital et d'attendre une configuration \u00e0 plus forte probabilit\u00e9.",
         "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-21 10:38:34",
+        "action": "HOLD",
+        "price": 70623.2,
+        "levier": 1,
+        "raisonnement": "Erreur technique (parsing JSON IA)",
+        "mode": "DEMO",
+        "fees_paid": 0.0
+    },
+    {
+        "timestamp": "2026-03-21 18:03:39",
+        "action": "HOLD",
+        "price": 70290.4,
+        "levier": 1,
+        "raisonnement": "Erreur technique (parsing JSON IA)",
+        "mode": "DEMO",
+        "fees_paid": 0.0
+    },
+    {
+        "timestamp": "2026-03-21 18:06:45",
+        "action": "HOLD",
+        "price": 70283.8,
+        "levier": 1,
+        "raisonnement": "Erreur technique: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\\nPlease retry in 13.799563912s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '13s'}]}}",
+        "mode": "DEMO",
+        "fees_paid": 0.0
+    },
+    {
+        "timestamp": "2026-03-21 18:09:55",
+        "action": "HOLD",
+        "price": 70221.4,
+        "levier": 1,
+        "raisonnement": "Erreur technique: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+        "mode": "DEMO",
+        "fees_paid": 0.0
+    },
+    {
+        "timestamp": "2026-03-21 18:10:12",
+        "action": "HOLD",
+        "price": 70209.3,
+        "levier": 1,
+        "raisonnement": "Erreur technique: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+        "mode": "DEMO",
+        "fees_paid": 0.0
+    },
+    {
+        "timestamp": "2026-03-21 18:11:33",
+        "action": "LONG",
+        "price": 70213.5,
+        "levier": 8,
+        "raisonnement": "Le march\u00e9 BTC/USDT a connu une pression baissi\u00e8re notable au cours des derni\u00e8res heures et jours, chutant des niveaux autour de 71 300 USDT vers le prix actuel de 70 215.7 USDT. L'analyse des graphiques 15min et 1h r\u00e9v\u00e8le des creux et des sommets de plus en plus bas, indiquant une tendance baissi\u00e8re imm\u00e9diate. Cependant, le prix actuel se situe \u00e0 proximit\u00e9 d'un niveau de support psychologique cl\u00e9 de 70 000 USDT, et non loin du plus bas des derni\u00e8res 24h (69 361.3 USDT) et des 3 derniers jours (69 050 USDT). Un signal important est la diminution du volume sur les derni\u00e8res bougies baissi\u00e8res de 15min et 1h. Cette baisse de volume, alors que le prix approche des zones de support, peut indiquer un \u00e9puisement des vendeurs et sugg\u00e9rer qu'une consolidation ou un rebond est imminent. En tant que trader expert, mon objectif de 12.0% d'ici le 2026-03-21 est un objectif \u00e0 long terme. Bien que le mouvement \u00e0 court terme soit incertain pour un objectif aussi ambitieux, prendre une position LONG \u00e0 un point de support potentiel, apr\u00e8s une correction et avec des signes d'\u00e9puisement de la vente, s'aligne avec une strat\u00e9gie d'achat sur les creux pour un actif g\u00e9n\u00e9ralement haussier sur le long terme comme le BTC. Les frais de 0.06% par ordre (0.12% aller-retour) et le spread minime (0.0001%) sont \u00e0 consid\u00e9rer, mais ne justifient pas de rester en HOLD si une opportunit\u00e9 de rebond se pr\u00e9sente. J'anticipe un rebond vers les niveaux de r\u00e9sistance pr\u00e9c\u00e9dents aux alentours de 70 500 - 70 800 USDT.",
+        "mode": "DEMO",
+        "fees_paid": 42.128099999999996
+    },
+    {
+        "timestamp": "2026-03-21 19:03:05",
+        "action": "HOLD",
+        "price": 70299.6,
+        "levier": 1,
+        "raisonnement": "L'analyse des graphiques 15min et 1h r\u00e9v\u00e8le une pression baissi\u00e8re pr\u00e9dominante au cours des derni\u00e8res 12-24 heures. Le prix actuel, \u00e0 70299.7, se situe vers le milieu inf\u00e9rieur de la fourchette de 24h (Haut: 71069.3, Bas: 69490). Sur le graphique 1h, nous observons une s\u00e9quence de baisses notables, notamment une chute d'environ 70703 \u00e0 70275. La reprise apr\u00e8s ces baisses s'est faite sur de faibles volumes, en particulier la derni\u00e8re bougie 15min qui montre une tr\u00e8s faible activit\u00e9 (volume: 44136), signalant une ind\u00e9cision du march\u00e9 plut\u00f4t qu'un fort mouvement directionnel. Bien qu'un support imm\u00e9diat puisse se situer autour de 70200-70250, l'absence d'une confirmation de rebond solide et le biais baissier r\u00e9cent ne justifient pas une position LONG \u00e0 fort pourcentage de capital. Inversement, une position SHORT imm\u00e9diate serait risqu\u00e9e car le prix est d\u00e9j\u00e0 proche de supports locaux et pourrait subir un l\u00e9ger rebond technique. L'objectif de 12.0% de profit, apr\u00e8s d\u00e9duction des frais (0.12% pour un aller-retour) et du spread, n\u00e9cessiterait une \u00e9volution du prix d'environ 8520 USD (pour un long) ou une chute similaire (pour un short), ce qui est un mouvement consid\u00e9rable et non \u00e9tay\u00e9 par les signaux actuels. En l'absence de signaux de forte conviction pour une direction claire et durable, la strat\u00e9gie la plus prudente est d'attendre. Je ne suis pas en position de prendre un trade avec un objectif aussi ambitieux dans les conditions actuelles du march\u00e9.",
+        "mode": "DEMO",
+        "fees_paid": 0.0
+    },
+    {
+        "timestamp": "2026-03-22 16:01:26",
+        "action": "SHORT",
+        "price": 68753.9,
+        "levier": 10,
+        "raisonnement": "L'analyse des donn\u00e9es sur 3 jours (15min et 1h) r\u00e9v\u00e8le une tendance baissi\u00e8re dominante pour BTC/USDT. Le prix actuel de 68699.9 se situe nettement plus proche du bas de la fourchette de 24h (68082.3) que du haut (70729.9). Apr\u00e8s une chute importante des prix, les tentatives de rebond observ\u00e9es sur les derni\u00e8res bougies de 15min sont caract\u00e9ris\u00e9es par des volumes tr\u00e8s faibles (69096), ce qui sugg\u00e8re une faiblesse de l'\u00e9lan haussier et une possible 'dead cat bounce'. Le march\u00e9 semble consolider autour des supports mineurs r\u00e9cents (68500-68600) mais la pression vendeuse reste forte sur le long terme. Les r\u00e9sistances imm\u00e9diates se situent autour de 68900-69000 et 69200. Une position SHORT est en ligne avec la tendance g\u00e9n\u00e9rale et le faible volume du r\u00e9cent rebond, offrant un point d'entr\u00e9e potentiellement favorable. Je vise un retour vers le support des 24h \u00e0 68082.3, voire un test de niveaux inf\u00e9rieurs comme 67500. Le spread (0.0001%) est n\u00e9gligeable, mais les frais de 0.06% par ordre (0.12% pour un aller-retour) seront inclus dans les calculs de rentabilit\u00e9. Un stop-loss sera positionn\u00e9 au-dessus de la r\u00e9sistance des 69200 pour une gestion de risque prudente.",
+        "mode": "DEMO",
+        "fees_paid": 41.25233999999999
+    },
+    {
+        "timestamp": "2026-03-22 18:39:06",
+        "action": "SHORT",
+        "price": 68666.4,
+        "levier": 10,
+        "raisonnement": "L'analyse des donn\u00e9es de march\u00e9 montre une tendance baissi\u00e8re pr\u00e9dominante sur les \u00e9chelles de temps de 15 minutes et 1 heure. Le prix actuel (68666.4) est situ\u00e9 sous les niveaux de cl\u00f4ture r\u00e9cents et a franchi \u00e0 la baisse plusieurs supports mineurs, qui peuvent d\u00e9sormais agir comme r\u00e9sistances. Bien que le volume ait diminu\u00e9 sur les derni\u00e8res bougies, ce qui pourrait sugg\u00e9rer une \u00e9ventuelle faiblesse de la pression vendeuse, aucun signal de retournement haussier significatif n'est apparent. Au contraire, la structure du march\u00e9 affiche des plus hauts et des plus bas successifs en baisse. Dans ce contexte, une continuation de la pression vendeuse est plus probable. Je choisis d'ouvrir une position 'SHORT' pour capitaliser sur cette dynamique, avec un stop-loss prudent au-dessus des r\u00e9sistances imm\u00e9diates et un take-profit ciblant les prochains niveaux de support majeurs.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-22 18:39:34",
+        "action": "SHORT",
+        "price": 68669.8,
+        "levier": 10,
+        "raisonnement": "L'analyse des donn\u00e9es de march\u00e9 sur 15m et 1h r\u00e9v\u00e8le une dynamique baissi\u00e8re r\u00e9cente. Le prix actuel (68669.8) est en dessous des prix de cl\u00f4ture r\u00e9cents sur les deux \u00e9chelles de temps, notamment la derni\u00e8re bougie de 15m qui a cl\u00f4tur\u00e9 \u00e0 68681.3 apr\u00e8s une ouverture \u00e0 68779.1. La bougie horaire actuelle a \u00e9galement montr\u00e9 un mouvement de 68761.9 \u00e0 68681.3. Cela indique une pression vendeuse persistante. Un mouvement de correction ou une continuation de la tendance baissi\u00e8re est anticip\u00e9. J'ouvre une position SHORT avec un levier mod\u00e9r\u00e9 pour capturer ce mouvement. Le stop-loss est plac\u00e9 au-dessus des r\u00e9sistances r\u00e9centes (pics autour de 68800-68850), et le take-profit vise un niveau de support inf\u00e9rieur, visant un ratio risque/rendement favorable.",
+        "model_used": "gemini-2.5-flash"
     }
 ]

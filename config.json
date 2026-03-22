@@ -3,6 +3,6 @@
     "demo_mode": true,
     "asset": "BTC/USDT",
     "target_yield": 12.0,
-    "deadline": "2026-03-21",
-    "last_update": ""
+    "deadline": "2026-12-31",
+    "macro_info": "Test local de simulation Warren Profond"
 }

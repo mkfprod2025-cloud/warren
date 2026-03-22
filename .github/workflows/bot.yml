@@ -2,12 +2,33 @@ name: Warren Bot Runner
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # S'exécute toutes les 15 minutes
-  workflow_dispatch: # Permet de le lancer manuellement
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Action'
+        required: true
+        default: 'START'
+        type: choice
+        options: [START, STOP, UPDATE_CONFIG]
+      asset:
+        description: 'Actif (ex: BTC/USDT)'
+        default: 'BTC/USDT'
+      target_yield:
+        description: 'Objectif (%)'
+        default: '12.0'
+      deadline:
+        description: 'Deadline (AAAA-MM-JJ)'
+        default: '2026-12-31'
+      macro_info:
+        description: 'Donnée Macro'
+        default: ''
 
 jobs:
   trade:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,8 +39,23 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Handle Manual Inputs
+        if: github.event_name == 'workflow_dispatch'
         run: |
-          pip install -r requirements.txt
+          python -c "
+          import json, os
+          config = json.load(open('config.json'))
+          inputs = ${{ toJson(github.event.inputs) }}
+          if inputs['command'] == 'START': config['bot_running'] = True
+          elif inputs['command'] == 'STOP': config['bot_running'] = False
+          if inputs['asset']: config['asset'] = inputs['asset']
+          if inputs['target_yield']: config['target_yield'] = float(inputs['target_yield'])
+          if inputs['deadline']: config['deadline'] = inputs['deadline']
+          if inputs['macro_info']: config['macro_info'] = inputs['macro_info']
+          json.dump(config, open('config.json', 'w'), indent=4)
+          "
 
       - name: Run Warren Bot Cycle
         env:
@@ -27,12 +63,12 @@ jobs:
           BITMART_SECRET: ${{ secrets.BITMART_SECRET }}
           BITMART_MEMO: ${{ secrets.BITMART_MEMO }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python bot.py --single-run
+        run: python bot.py
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "Warren Bot"
-          git config --global user.email "warren-bot@users.noreply.github.com"
-          git add trades_history.json positions.json config.json
-          git commit -m "Warren: Mise à jour automatique des trades et positions" || echo "No changes to commit"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add trades_history.json positions.json config.json index.html DASHBOARD.md
+          git commit -m "Warren: Mise à jour auto" || echo "No changes"
           git push
