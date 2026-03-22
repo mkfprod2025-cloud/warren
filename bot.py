@@ -42,7 +42,7 @@ def load_json(file_path, default):
     return default
 
 def generate_html_dashboard(config, trades, positions, last_decision):
-    """Génère un Dashboard HTML5 avec console de commande intégrée"""
+    """Génère un Dashboard HTML5 avec console de commande intégrée (v3.2)"""
     status_class = "status-active" if config.get("bot_running") else "status-stopped"
     status_text = "OPÉRATIONNEL" if config.get("bot_running") else "EN PAUSE"
     total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
@@ -94,8 +94,8 @@ def generate_html_dashboard(config, trades, positions, last_decision):
             <div class="grid">
                 <div class="card"><h3>Actif</h3><p>{config.get('asset')}</p></div>
                 <div class="card"><h3>PNL Net</h3><p style="color: {'var(--green)' if total_pnl >=0 else 'var(--red)'}">{total_pnl:.2f}%</p></div>
-                <div class="card"><h3>Mode</h3><p>{'DÉMO' if config.get('demo_mode') else 'RÉEL'}</p></div>
-                <div class="card"><h3>Positions</h3><p>{len(positions)}</p></div>
+                <div class="card"><h3>Objectif %</h3><p>{config.get('target_yield')}%</p></div>
+                <div class="card"><h3>Date Limite</h3><p style="font-size: 14px;">{config.get('deadline')}</p></div>
             </div>
 
             <div class="brain">
@@ -109,9 +109,10 @@ def generate_html_dashboard(config, trades, positions, last_decision):
                     <label>Donnée Macro / Instruction</label>
                     <textarea id="macro" placeholder="Ex: Marché très volatil, sois prudent..."></textarea>
                 </div>
-                <div class="grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="form-group"><label>Actif</label><input type="text" id="asset" value="{config.get('asset')}"></div>
-                    <div class="form-group"><label>Objectif %</label><input type="number" id="yield" value="{config.get('target_yield')}"></div>
+                    <div class="form-group"><label>Obj. %</label><input type="number" id="yield" value="{config.get('target_yield')}"></div>
+                    <div class="form-group"><label>Deadline</label><input type="date" id="deadline" value="{config.get('deadline')}"></div>
                 </div>
                 <div class="btn-group">
                     <button class="btn-start" onclick="sendCommand('START')">DÉMARRER</button>
@@ -123,7 +124,7 @@ def generate_html_dashboard(config, trades, positions, last_decision):
 
             <script>
                 async function sendCommand(cmd) {{
-                    const token = localStorage.getItem('GITHUB_TOKEN') || prompt('Entrez votre GITHUB_TOKEN (indispensable pour piloter) :');
+                    const token = localStorage.getItem('GITHUB_TOKEN') || prompt('Entrez votre GITHUB_TOKEN :');
                     if (!token) return;
                     localStorage.setItem('GITHUB_TOKEN', token);
                     
@@ -137,7 +138,7 @@ def generate_html_dashboard(config, trades, positions, last_decision):
                             asset: document.getElementById('asset').value,
                             target_yield: document.getElementById('yield').value,
                             macro_info: document.getElementById('macro').value,
-                            deadline: '2026-12-31'
+                            deadline: document.getElementById('deadline').value
                         }}
                     }};
 
@@ -181,7 +182,7 @@ def generate_html_dashboard(config, trades, positions, last_decision):
                 </tbody>
             </table>
             <p style="text-align:center; color:#768390; font-size:10px; margin-top:30px;">
-                Généré par Warren AI • Terminal Interactif v3.1
+                Généré par Warren AI • Terminal Interactif v3.2
             </p>
         </div>
     </body>
