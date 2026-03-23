@@ -27,6 +27,9 @@ DASHBOARD_HTML = "index.html"
 DASHBOARD_MD = "DASHBOARD.md"
 FEE_RATE = 0.0006 
 
+# Liste d'actifs pour le Multi-Trading (v3.4)
+ASSETS_TO_WATCH = ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
+
 def get_config():
     default = {"bot_running": False, "demo_mode": True, "asset": "BTC/USDT", "target_yield": 12.0, "deadline": "2026-12-31", "macro_info": ""}
     if os.path.exists(CONFIG_FILE):
@@ -45,7 +48,7 @@ def load_json(file_path, default):
     return default
 
 def generate_dashboards(config, trades, positions, last_decision):
-    """Génère le Dashboard HTML5 et le résumé Markdown (v3.3)"""
+    """Génère le Dashboard HTML5 et le résumé Markdown (v3.4)"""
     status_class = "status-active" if config.get("bot_running") else "status-stopped"
     status_text = "OPÉRATIONNEL" if config.get("bot_running") else "EN PAUSE"
     total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
@@ -88,19 +91,19 @@ def generate_dashboards(config, trades, positions, last_decision):
     <body>
         <div class="container">
             <div class="header">
-                <h1>📈 WARREN AI <small style="font-size: 10px; color: #768390;">v3.3</small></h1>
+                <h1>📈 WARREN AI <small style="font-size: 10px; color: #768390;">v3.4</small></h1>
                 <span class="status-badge {status_class}">{status_text}</span>
             </div>
             
             <div class="grid">
-                <div class="card"><h3>Actif</h3><p>{config.get('asset')}</p></div>
+                <div class="card"><h3>Mode Multi</h3><p>{len(ASSETS_TO_WATCH)} Actifs</p></div>
                 <div class="card"><h3>PNL Net</h3><p style="color: {'var(--green)' if total_pnl >=0 else 'var(--red)'}">{total_pnl:.2f}%</p></div>
                 <div class="card"><h3>Objectif %</h3><p>{config.get('target_yield')}%</p></div>
                 <div class="card"><h3>Date Limite</h3><p style="font-size: 14px;">{config.get('deadline')}</p></div>
             </div>
 
             <div class="brain">
-                <strong style="color:var(--accent);">🧠 Analyse :</strong> "{last_decision.get('raisonnement', 'En attente de cycle...')}"
+                <strong style="color:var(--accent);">🧠 Dernière Analyse ({last_decision.get('asset', 'N/A')}) :</strong> "{last_decision.get('raisonnement', 'En attente de cycle...')}"
             </div>
 
             <div class="console">
@@ -110,7 +113,7 @@ def generate_dashboards(config, trades, positions, last_decision):
                     <textarea id="macro" placeholder="Ex: Marché très volatil...">{config.get('macro_info', '')}</textarea>
                 </div>
                 <div class="grid" style="grid-template-columns: 1fr 1fr 1fr;">
-                    <div class="form-group"><label>Actif</label><input type="text" id="asset" value="{config.get('asset')}"></div>
+                    <div class="form-group"><label>Focus Actif</label><input type="text" id="asset" value="{config.get('asset')}"></div>
                     <div class="form-group"><label>Obj. %</label><input type="number" id="yield" value="{config.get('target_yield')}"></div>
                     <div class="form-group"><label>Deadline</label><input type="date" id="deadline" value="{config.get('deadline')}"></div>
                 </div>
@@ -163,10 +166,10 @@ def generate_dashboards(config, trades, positions, last_decision):
     with open(DASHBOARD_HTML, "w", encoding="utf-8") as f: f.write(html_content)
 
     # 2. GÉNÉRATION MARKDOWN
-    md_content = f"""# 📈 WARREN AI STATUS (v3.3)
-**État :** {status_text} | **PNL :** {total_pnl:.2f}% | **Actif :** {config.get('asset')}
+    md_content = f"""# 📈 WARREN AI STATUS (v3.4)
+**État :** {status_text} | **PNL :** {total_pnl:.2f}% | **Actifs suivis :** {", ".join(ASSETS_TO_WATCH)}
 
-### 🧠 Dernière Analyse
+### 🧠 Dernière Analyse ({last_decision.get('asset', 'N/A')})
 > {last_decision.get('raisonnement', 'N/A')}
 
 ### 📍 Positions
@@ -184,12 +187,13 @@ def ask_gemini_pro(asset, config, market_data):
     prompt = f"""
     Tu es Warren, un trader IA expert Futures sur BitMart.
     OBJECTIF : {config['target_yield']}% net d'ici le {config['deadline']}.
+    ACTIF : {asset}
     MACRO : {config.get('macro_info', 'N/A')}
     DONNÉES MARCHÉ : Prix {market_data['price']} | Bid/Ask {market_data['best_bid']}/{market_data['best_ask']}
     
-    RÉPONDS STRICTEMENT EN JSON :
+    RÉPONDS STRICTEMENT EN JSON, en remplaçant les valeurs par ton analyse réelle :
     {{
-        "raisonnement": "analyse technique et macro ultra-détaillée",
+        "raisonnement": "Rédige ici ton analyse technique et macro argumentée pour {asset}",
         "action": "LONG" | "SHORT" | "CLOSE" | "HOLD" | "SET_SL_TP",
         "levier": 1-20,
         "sl": prix, "tp": prix, "pourcentage_capital": 1-100
@@ -200,9 +204,10 @@ def ask_gemini_pro(asset, config, market_data):
             response = client.models.generate_content(model=model_id, contents=prompt, config={"response_mime_type": "application/json"})
             decision = response.parsed if response.parsed else json.loads(response.text)
             decision['model_used'] = model_id
+            decision['asset'] = asset
             return decision
         except Exception: continue
-    return {"action": "HOLD", "raisonnement": "Saturation IA ou erreur modèle."}
+    return {"action": "HOLD", "raisonnement": "Saturation IA.", "asset": asset}
 
 def execute(asset, decision, market_data):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -213,7 +218,7 @@ def execute(asset, decision, market_data):
     price = market_data['price']
     
     trade_info = {
-        "timestamp": timestamp, "action": action, "price": price, 
+        "timestamp": timestamp, "asset": asset, "action": action, "price": price, 
         "levier": decision.get('levier', 1), "raisonnement": decision['raisonnement'],
         "model_used": decision.get('model_used', 'N/A')
     }
@@ -240,17 +245,25 @@ def run_cycle():
     positions = load_json(POSITIONS_FILE, {})
     
     if not config.get("bot_running"):
-        print("Warren est en pause. Mise à jour des dashboards.")
-        generate_dashboards(config, trades, positions, {"raisonnement": "Bot en pause (OFF)."})
+        print("Warren est en pause.")
+        generate_dashboards(config, trades, positions, {"raisonnement": "Bot en pause."})
         return
 
-    data = get_market_data(config["asset"])
-    if data:
-        decision = ask_gemini_pro(config["asset"], config, data)
-        execute(config["asset"], decision, data)
-        generate_dashboards(config, trades, positions, decision)
-    else:
-        generate_dashboards(config, trades, positions, {"raisonnement": "Erreur de connexion BitMart."})
+    # Boucle Multi-Trading sur les actifs configurés
+    last_decision = {"raisonnement": "Aucune opportunité détectée."}
+    assets = list(set([config["asset"]] + ASSETS_TO_WATCH)) # Fusion config + liste par défaut
+    
+    for asset in assets:
+        print(f"Analyse de {asset}...")
+        data = get_market_data(asset)
+        if data:
+            decision = ask_gemini_pro(asset, config, data)
+            if decision['action'] != "HOLD" or asset == config["asset"]:
+                execute(asset, decision, data)
+                last_decision = decision
+        time.sleep(1) # Petit délai pour BitMart
+
+    generate_dashboards(config, trades, positions, last_decision)
 
 def get_market_data(asset):
     symbol = asset.replace("/", "")
@@ -264,7 +277,7 @@ def get_market_data(asset):
         best_ask = float(depth['asks'][0][0]) if depth['asks'] else float(details['last_price'])
         return {"price": float(details['last_price']), "best_bid": best_bid, "best_ask": best_ask}
     except Exception as e:
-        print(f"Erreur BitMart: {e}")
+        print(f"Erreur BitMart ({asset}): {e}")
         return None
 
 if __name__ == "__main__":
@@ -273,6 +286,5 @@ if __name__ == "__main__":
     except Exception as e:
         import traceback
         err = traceback.format_exc()
-        print(f"ERREUR CRITIQUE: {e}")
         with open(DASHBOARD_MD, "w", encoding="utf-8") as f:
-            f.write(f"# 🚨 ERREUR CRITIQUE DU BOT\n```python\n{err}\n```")
+            f.write(f"# 🚨 ERREUR CRITIQUE\n```python\n{err}\n```")
