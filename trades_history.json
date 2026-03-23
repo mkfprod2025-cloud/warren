@@ -457,5 +457,23 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 19:57:09",
+        "asset": "SOL/USDT",
+        "action": "SHORT",
+        "price": 91.31,
+        "levier": 3,
+        "raisonnement": "Le PNL actuel (43.24%) est largement sup\u00e9rieur \u00e0 l'objectif de 17.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie de 'S\u00e9curisation', le risque doit \u00eatre consid\u00e9rablement r\u00e9duit. Cela implique un levier faible (1-5x) et une approche prudente. \u00c9tant donn\u00e9 l'ampleur des gains, il est probable que des prises de profits puissent survenir, entra\u00eenant une correction ou une consolidation. Une petite position SHORT avec un levier conservateur est une strat\u00e9gie de protection pour capter un potentiel pullback, tout en g\u00e9rant activement le risque.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 19:57:22",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 70655.8,
+        "levier": 3,
+        "raisonnement": "Mon PNL actuel (43.24%) est largement sup\u00e9rieur \u00e0 mon objectif de ROI (17.0%). Conform\u00e9ment \u00e0 ma strat\u00e9gie, je passe en mode de s\u00e9curisation des profits, ce qui signifie que je devrai utiliser un levier faible pour toute nouvelle position afin de minimiser le risque. J'initie une position LONG avec un levier conservateur, cherchant \u00e0 capturer un petit mouvement haussier avec un risque contr\u00f4l\u00e9.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
