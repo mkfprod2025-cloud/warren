@@ -336,5 +336,23 @@
         "levier": 20,
         "raisonnement": "Le PNL actuel est de 0.00%, ce qui est tr\u00e8s loin de notre objectif de 19.0% ROI. Conform\u00e9ment \u00e0 ma strat\u00e9gie DYNAMIQUE, je dois prendre une position agressive pour initier la croissance du capital. Je vais ouvrir une position LONG sur BTC/USDT avec un levier \u00e9lev\u00e9 pour maximiser le rendement sur une fluctuation de prix favorable, tout en d\u00e9finissant un Stop Loss strict pour prot\u00e9ger mon capital. L'objectif est d'atteindre rapidement une partie du ROI cible de 19.0%.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 15:15:25",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2177.99,
+        "levier": 18,
+        "raisonnement": "Mon PNL actuel est de 0.00% et mon ROI cible est de 19.0%. \u00c9tant donn\u00e9 que je suis 'loin de l'objectif', ma strat\u00e9gie dynamique exige l'utilisation d'un levier \u00e9lev\u00e9. J'opte pour un levier de 18x, situ\u00e9 dans la fourchette 15-20x. J'ouvre une position LONG sur ETH/USDT pour commencer \u00e0 g\u00e9n\u00e9rer du PNL vers mon objectif, avec un stop loss et un take profit pour g\u00e9rer le risque et le potentiel de gain.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 15:15:27",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 71335.7,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
     }
 ]
