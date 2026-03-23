@@ -438,5 +438,24 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 19:39:44",
+        "asset": "ETH/USDT",
+        "action": "CLOSE",
+        "price": 2161.44,
+        "levier": 1,
+        "raisonnement": "Le PNL actuel de 42.37% est largement sup\u00e9rieur \u00e0 l'objectif de ROI de 17.0%. Conform\u00e9ment \u00e0 ma strat\u00e9gie de s\u00e9curisation, le moment est venu de cl\u00f4turer la position pour r\u00e9aliser les profits et prot\u00e9ger le capital acquis. Il n'est pas n\u00e9cessaire de prendre de nouveaux risques inutiles.",
+        "model_used": "gemini-2.5-flash",
+        "pnl_net_pct": 0.8659076477468846
+    },
+    {
+        "timestamp": "2026-03-23 19:39:50",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 70915.4,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
     }
 ]
