@@ -50,12 +50,12 @@ jobs:
           import json, os
           config = json.load(open('config.json'))
           inputs = ${{ toJson(github.event.inputs) }}
-          if inputs['command'] == 'START': config['bot_running'] = True
-          elif inputs['command'] == 'STOP': config['bot_running'] = False
-          if inputs['asset']: config['asset'] = inputs['asset']
-          if inputs['target_yield']: config['target_yield'] = float(inputs['target_yield'])
-          if inputs['deadline']: config['deadline'] = inputs['deadline']
-          if inputs['macro_info']: config['macro_info'] = inputs['macro_info']
+          if inputs.get('command') == 'START': config['bot_running'] = True
+          elif inputs.get('command') == 'STOP': config['bot_running'] = False
+          if inputs.get('asset'): config['asset'] = inputs['asset']
+          if inputs.get('target_yield'): config['target_yield'] = float(inputs['target_yield'])
+          if inputs.get('deadline'): config['deadline'] = inputs['deadline']
+          if inputs.get('macro_info') is not None: config['macro_info'] = inputs['macro_info']
           json.dump(config, open('config.json', 'w'), indent=4)
           "
 
