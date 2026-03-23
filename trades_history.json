@@ -192,5 +192,32 @@
         "levier": 10,
         "raisonnement": "Analyse du micro-contexte actuel : le spread Bid/Ask est tr\u00e8s serr\u00e9 (68572.4/68572.5), indiquant une excellente liquidit\u00e9. Le prix spot (68576.6) est l\u00e9g\u00e8rement sup\u00e9rieur au Ask, sugg\u00e9rant une tr\u00e8s l\u00e9g\u00e8re pression acheteuse \u00e0 court terme. Dans le cadre de ce 'Test local de simulation Warren Profond', et en l'absence d'indicateurs techniques plus d\u00e9taill\u00e9s, je vais capitaliser sur ce signal micro-structurel haussier pour initier une position LONG. L'objectif annuel de 12% d'ici fin 2026 justifie des prises de risque calcul\u00e9es. Je cible un mouvement court-moyen terme avec un ratio risque/r\u00e9compense favorable, en pla\u00e7ant un Stop Loss sous un niveau de support psychologique et un Take Profit \u00e0 un niveau de r\u00e9sistance plausible.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 08:40:32",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2051.07,
+        "levier": 8,
+        "raisonnement": "Dans le cadre de ce test de simulation Warren Profond, mon objectif \u00e0 long terme est d'atteindre 12.0% net d'ici 2026-12-31 sur ETH/USDT. Le prix actuel de 2051.07, avec un bid/ask de 2051.41/2051.42, indique un march\u00e9 liquide. Bien qu'aucune analyse technique approfondie (indicateurs, patterns) ne soit disponible dans ce format, une perspective macro sur l'ETH, en tant qu'actif majeur de l'\u00e9cosyst\u00e8me crypto, sugg\u00e8re un potentiel de croissance structurelle \u00e0 long terme. Je prends une position LONG pour initier ce cycle de simulation, capitalisant sur une anticipation g\u00e9n\u00e9rale de reprise ou de continuation haussi\u00e8re. Le levier de 8 est choisi pour optimiser l'exposition tout en maintenant une gestion du risque prudente. Le Stop Loss \u00e0 2010.00 prot\u00e8ge le capital en cas de correction inattendue, correspondant \u00e0 environ 2% de perte par rapport au point d'entr\u00e9e. Le Take Profit \u00e0 2155.00 vise un gain significatif, offrant un ratio risque/r\u00e9compense favorable d'environ 1:2.5, ce qui est coh\u00e9rent avec une strat\u00e9gie de croissance. L'allocation de 7% du capital assure une gestion de risque mesur\u00e9e pour cette position initiale.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 08:40:41",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 86.11,
+        "levier": 10,
+        "raisonnement": "L'analyse des donn\u00e9es de march\u00e9 actuelles pour SOL/USDT (prix 86.11, spread Bid/Ask 86.16/86.17) indique une liquidit\u00e9 saine et un l\u00e9ger penchant haussier dans l'imm\u00e9diat, avec l'Ask l\u00e9g\u00e8rement sup\u00e9rieur au prix de r\u00e9f\u00e9rence. Dans le cadre de notre simulation Warren Profond, et consid\u00e9rant la performance historique de SOL ainsi que le sentiment g\u00e9n\u00e9ral du march\u00e9 crypto qui cherche des points d'entr\u00e9e sur des actifs solides, une opportunit\u00e9 tactique \u00e0 l'achat est identifi\u00e9e. Nous visons \u00e0 capturer une impulsion haussi\u00e8re \u00e0 court terme. Le Stop Loss est positionn\u00e9 sous un niveau de support psychologique cl\u00e9 pour limiter le risque, tandis que le Take Profit est d\u00e9fini pour assurer un ratio risque/r\u00e9compense favorable, contribuant \u00e0 notre objectif global de 12.0% net.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 08:40:54",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 68460.3,
+        "levier": 10,
+        "raisonnement": "Le march\u00e9 BTC/USDT se trouve dans une phase de consolidation autour du niveau des 68500, un point pivot psychologique important. Le spread Bid/Ask tr\u00e8s serr\u00e9 (68513.1/68513.2) confirme une excellente liquidit\u00e9, propice \u00e0 des entr\u00e9es pr\u00e9cises. Dans le cadre de ce 'Test local de simulation Warren Profond', et en vue de notre objectif de 12% net d'ici fin 2026, il est essentiel d'adopter une strat\u00e9gie de gestion du risque tout en cherchant des opportunit\u00e9s de croissance. Sans donn\u00e9es historiques ou indicateurs techniques suppl\u00e9mentaires sp\u00e9cifiques, j'interpr\u00e8te la stagnation actuelle comme une potentielle phase d'accumulation pr\u00e9c\u00e9dant une nouvelle impulsion. Compte tenu du momentum globalement haussier de BTC sur le long terme, une entr\u00e9e en position LONG est privil\u00e9gi\u00e9e, anticipant un rebond sur un support implicite ou une rupture de la r\u00e9sistance actuelle pour une continuation de la tendance haussi\u00e8re. Je vais positionner un stop loss strict pour prot\u00e9ger le capital en cas de faux mouvement et un take profit visant un ratio risque/r\u00e9compense favorable.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
