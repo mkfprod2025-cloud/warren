@@ -192,7 +192,33 @@ def generate_dashboards(config, trades, positions, last_decision):
     with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(md_content)
 
 def ask_gemini_pro(asset, config, market_data):
-    prompt = f"""Tu es Warren, trader expert Futures BitMart. OBJECTIF: {config['target_yield']}% net d'ici le {config['deadline']}. ACTIF: {asset}. MACRO: {config.get('macro_info', 'N/A')}. DONNÉES: Prix {market_data['price']} | Bid/Ask {market_data['best_bid']}/{market_data['best_ask']}. RÉPONDS STRICTEMENT EN JSON: {{"raisonnement": "analyse détaillée", "action": "LONG"|"SHORT"|"CLOSE"|"HOLD", "levier": 1-20, "sl": prix, "tp": prix, "pourcentage_capital": 1-100}}"""
+    trades = load_json(TRADES_FILE, [])
+    total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
+    
+    prompt = f"""
+    Tu es Warren, un trader IA expert Futures. Ta stratégie doit être DYNAMIQUE.
+    
+    PARAMÈTRES ACTUELS :
+    - Objectif de rendement : {config['target_yield']}% net.
+    - Échéance : {config['deadline']}.
+    - PNL Actuel : {total_pnl:.2f}%.
+    - Actif : {asset}.
+    
+    LOGIQUE D'ADAPTATION REQUISE :
+    1. Si l'objectif est loin et l'échéance proche : Augmente l'agressivité (Levier 15-20x, trades plus fréquents).
+    2. Si tu es proche de l'objectif : Passe en mode sécurisation (Levier 1-5x, Stop-Loss très serrés).
+    3. Si le marché est incertain (spread large) : Reste en HOLD peu importe l'objectif.
+    
+    DONNÉES MARCHÉ : Prix {market_data['price']} | Bid/Ask {market_data['best_bid']}/{market_data['best_ask']}
+    
+    RÉPONDS STRICTEMENT EN JSON, en adaptant tes SL/TP et Levier à l'objectif :
+    {{
+        "raisonnement": "Explique pourquoi cette décision aide à atteindre les {config['target_yield']}% (ex: besoin de rendement vs besoin de sécurité)",
+        "action": "LONG" | "SHORT" | "CLOSE" | "HOLD" | "SET_SL_TP",
+        "levier": 1-20,
+        "sl": prix, "tp": prix, "pourcentage_capital": 1-100
+    }}
+    """
     for model_id in MODELS_PRIORITY:
         try:
             response = client.models.generate_content(model=model_id, contents=prompt, config={"response_mime_type": "application/json"})
