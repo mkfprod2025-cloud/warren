@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -70,5 +72,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add trades_history.json positions.json config.json index.html DASHBOARD.md
-          git commit -m "Warren: Mise à jour auto" || echo "No changes"
-          git push
+          git pull --rebase origin main
+          git commit -m "Warren: Mise à jour auto v3.3" || echo "No changes"
+          git push origin main
