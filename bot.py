@@ -211,7 +211,7 @@ def execute(asset, decision, market_data):
     price = market_data['price']
     trade_info = { "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision['raisonnement'], "model_used": decision.get('model_used', 'N/A') }
     if action in ["LONG", "SHORT"]:
-        positions[asset] = {{ "entry_price": price, "action": action, "levier": decision['levier'], "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }}
+        positions[asset] = { "entry_price": price, "action": action, "levier": decision['levier'], "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }
     elif action == "CLOSE" and asset in positions:
         pos = positions[asset]
         pnl = (price - pos['entry_price'])/pos['entry_price'] if pos['action']=="LONG" else (pos['entry_price'] - price)/pos['entry_price']
