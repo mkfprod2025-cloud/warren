@@ -309,5 +309,14 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 12:11:49",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 70060.0,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
     }
 ]
