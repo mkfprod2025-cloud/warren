@@ -12,14 +12,14 @@ on:
         type: choice
         options: [START, STOP, UPDATE_CONFIG]
       asset:
-        description: 'Actif (ex: BTC/USDT)'
+        description: 'Actif'
         default: 'BTC/USDT'
       target_yield:
         description: 'Objectif (%)'
-        default: '12.0'
+        default: '15.0'
       deadline:
-        description: 'Deadline (AAAA-MM-JJ)'
-        default: '2026-12-31'
+        description: 'Deadline'
+        default: '2026-03-24'
       macro_info:
         description: 'Donnée Macro'
         default: ''
@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Handle Manual Inputs
+      - name: Handle Manual Inputs & Immediate Save
         if: github.event_name == 'workflow_dispatch'
         env:
           EVENT_INPUTS: ${{ toJson(github.event.inputs) }}
@@ -61,6 +61,11 @@ jobs:
           if inputs.get('macro_info') is not None: config['macro_info'] = inputs['macro_info']
           json.dump(config, open('config.json', 'w'), indent=4)
           "
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add config.json
+          git commit -m "Warren: Mise à jour manuelle de la config" || echo "No changes"
+          git push origin main --force
 
       - name: Run Warren Bot Cycle
         env:
@@ -70,10 +75,11 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python bot.py
 
-      - name: Commit and push changes
+      - name: Final Commit and push (Trades & UI)
+        if: always()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add trades_history.json positions.json config.json index.html DASHBOARD.md
-          git commit -m "Warren: Mise à jour auto v3.5" || echo "No changes to commit"
+          git commit -m "Warren: Mise à jour auto (cycle terminé)" || echo "No changes"
           git push origin main --force
