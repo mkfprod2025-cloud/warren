@@ -9,13 +9,13 @@
         "timestamp": "2026-03-23 16:13:30"
     },
     "ETH/USDT": {
-        "entry_price": 2177.99,
+        "entry_price": 2135.58,
         "action": "LONG",
-        "levier": 18,
-        "sl": 2940,
-        "tp": 3150,
-        "capital_pct": 15,
-        "timestamp": "2026-03-23 15:15:25"
+        "levier": 20,
+        "sl": 2975.0,
+        "tp": 3050.0,
+        "capital_pct": 50,
+        "timestamp": "2026-03-23 17:10:38"
     },
     "SOL/USDT": {
         "entry_price": 90.2,
