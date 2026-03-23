@@ -188,37 +188,13 @@ def generate_dashboards(config, trades, positions, last_decision):
     # 2. GÉNÉRATION MARKDOWN
     md_content = f"""# 📈 WARREN AI STATUS (v3.5)\n**État :** {status_text} | **PNL :** {total_pnl:.2f}%\n\n### 🧠 Analyse ({last_decision.get('asset', 'N/A')})\n> {last_decision.get('raisonnement', 'N/A')}\n\n### 📍 Positions Actives\n| Actif | Action | Entrée | SL | TP | Cap |\n|---|---|---|---|---|---|\n"""
     for asset, data in positions.items():
-        md_content += f"| {asset} | {data['action']} | {data['entry_price']} | {data.get('sl','-')} | {data.get('tp','-')} | {data.get('capital_pct','-')}% |\n"
+        md_content += f"| {asset} | {data.get('action','-')} | {data.get('entry_price','-')} | {data.get('sl','-')} | {data.get('tp','-')} | {data.get('capital_pct','-')}% |\n"
     with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(md_content)
 
 def ask_gemini_pro(asset, config, market_data):
     trades = load_json(TRADES_FILE, [])
     total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
-    
-    prompt = f"""
-    Tu es Warren, un trader IA expert Futures. Ta stratégie doit être DYNAMIQUE.
-    
-    PARAMÈTRES ACTUELS :
-    - Objectif de rendement : {config['target_yield']}% net.
-    - Échéance : {config['deadline']}.
-    - PNL Actuel : {total_pnl:.2f}%.
-    - Actif : {asset}.
-    
-    LOGIQUE D'ADAPTATION REQUISE :
-    1. Si l'objectif est loin et l'échéance proche : Augmente l'agressivité (Levier 15-20x, trades plus fréquents).
-    2. Si tu es proche de l'objectif : Passe en mode sécurisation (Levier 1-5x, Stop-Loss très serrés).
-    3. Si le marché est incertain (spread large) : Reste en HOLD peu importe l'objectif.
-    
-    DONNÉES MARCHÉ : Prix {market_data['price']} | Bid/Ask {market_data['best_bid']}/{market_data['best_ask']}
-    
-    RÉPONDS STRICTEMENT EN JSON, en adaptant tes SL/TP et Levier à l'objectif :
-    {{
-        "raisonnement": "Explique pourquoi cette décision aide à atteindre les {config['target_yield']}% (ex: besoin de rendement vs besoin de sécurité)",
-        "action": "LONG" | "SHORT" | "CLOSE" | "HOLD" | "SET_SL_TP",
-        "levier": 1-20,
-        "sl": prix, "tp": prix, "pourcentage_capital": 1-100
-    }}
-    """
+    prompt = f"""Tu es Warren, trader expert Futures. Ta stratégie est DYNAMIQUE. ROI Cible: {config['target_yield']}%. PNL Actuel: {total_pnl:.2f}%. Actif: {asset}. LOGIQUE: 1. Si loin de l'objectif: Levier 15-20x. 2. Si proche: Levier 1-5x. RÉPONDS STRICTEMENT EN JSON: {{"raisonnement": "...", "action": "LONG"|"SHORT"|"CLOSE"|"HOLD", "levier": 1-20, "sl": prix, "tp": prix, "pourcentage_capital": 1-100}}"""
     for model_id in MODELS_PRIORITY:
         try:
             response = client.models.generate_content(model=model_id, contents=prompt, config={"response_mime_type": "application/json"})
@@ -235,13 +211,13 @@ def execute(asset, decision, market_data):
     trades = load_json(TRADES_FILE, [])
     action = decision['action']
     price = market_data['price']
-    trade_info = { "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision['raisonnement'], "model_used": decision.get('model_used', 'N/A') }
+    trade_info = { "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision.get('raisonnement','N/A'), "model_used": decision.get('model_used', 'N/A') }
     if action in ["LONG", "SHORT"]:
-        positions[asset] = { "entry_price": price, "action": action, "levier": decision['levier'], "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }
+        positions[asset] = { "entry_price": price, "action": action, "levier": decision.get('levier', 1), "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }
     elif action == "CLOSE" and asset in positions:
         pos = positions[asset]
         pnl = (price - pos['entry_price'])/pos['entry_price'] if pos['action']=="LONG" else (pos['entry_price'] - price)/pos['entry_price']
-        trade_info["pnl_net_pct"] = (pnl * pos['levier'] - (2 * FEE_RATE)) * 100
+        trade_info["pnl_net_pct"] = (pnl * pos.get('levier', 1) - (2 * FEE_RATE)) * 100
         del positions[asset]
     trades.append(trade_info)
     with open(POSITIONS_FILE, "w") as f: json.dump(positions, f, indent=4)
@@ -278,7 +254,7 @@ def get_market_data(asset):
         best_bid = float(depth['bids'][0][0]) if depth['bids'] else float(details['last_price'])
         best_ask = float(depth['asks'][0][0]) if depth['asks'] else float(details['last_price'])
         return {"price": float(details['last_price']), "best_bid": best_bid, "best_ask": best_ask}
-    except Exception as e: return None
+    except Exception: return None
 
 if __name__ == "__main__":
     try: run_cycle()
