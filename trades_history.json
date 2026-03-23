@@ -354,5 +354,23 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 16:13:24",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 90.2,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel est de 0.00%, ce qui est significativement \u00e9loign\u00e9 de l'objectif de ROI de 19.0%. Selon ma strat\u00e9gie dynamique, lorsque nous sommes loin de l'objectif, un levier \u00e9lev\u00e9 entre 15x et 20x est appropri\u00e9 pour maximiser le potentiel de profit et atteindre rapidement le cible. J'initie une nouvelle position pour commencer \u00e0 g\u00e9n\u00e9rer des gains.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 16:13:30",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 70450.1,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel est de 0.00%, ce qui est loin de l'objectif de 19.0%. Conform\u00e9ment \u00e0 ma strat\u00e9gie dynamique, je dois utiliser un levier \u00e9lev\u00e9 pour initier une position et acc\u00e9l\u00e9rer l'atteinte du ROI cible. Je prends une position LONG sur BTC/USDT pour anticiper une hausse, fixant un Stop Loss et un Take Profit pour g\u00e9rer le risque et le potentiel de gain sur ce trade initial.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
