@@ -1,5 +1,5 @@
 {
-    "bot_running": false,
+    "bot_running": true,
     "demo_mode": true,
     "asset": "BTC/USDT",
     "target_yield": 17.0,
