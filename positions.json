@@ -1,11 +1,12 @@
 {
     "BTC/USDT": {
-        "entry_price": 68086.2,
+        "entry_price": 71478.4,
         "action": "LONG",
-        "levier": 8,
-        "sl": 67500.0,
-        "tp": 69800.0,
-        "timestamp": "2026-03-23 09:34:02"
+        "levier": 20,
+        "sl": 64512.5,
+        "tp": 65650.0,
+        "capital_pct": 15,
+        "timestamp": "2026-03-23 14:01:58"
     },
     "ETH/USDT": {
         "entry_price": 2043.0,

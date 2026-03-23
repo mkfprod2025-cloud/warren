@@ -327,5 +327,14 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 14:01:58",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 71478.4,
+        "levier": 20,
+        "raisonnement": "Le PNL actuel est de 0.00%, ce qui est tr\u00e8s loin de notre objectif de 19.0% ROI. Conform\u00e9ment \u00e0 ma strat\u00e9gie DYNAMIQUE, je dois prendre une position agressive pour initier la croissance du capital. Je vais ouvrir une position LONG sur BTC/USDT avec un levier \u00e9lev\u00e9 pour maximiser le rendement sur une fluctuation de prix favorable, tout en d\u00e9finissant un Stop Loss strict pour prot\u00e9ger mon capital. L'objectif est d'atteindre rapidement une partie du ROI cible de 19.0%.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
