@@ -119,8 +119,8 @@ def generate_dashboards(config, trades, positions, last_decision):
                             <tbody>
     """
     for asset, data in positions.items():
-        tag = "tag-long" if data['action'] == "LONG" else "tag-short"
-        html_content += f"""<tr><td><strong>{asset}</strong></td><td><span class="tag {tag}">{data['action']}</span></td><td>{data['entry_price']}</td><td>{data['levier']}x</td><td style="color:var(--red)">{data.get('sl','-')}</td><td style="color:var(--green)">{data.get('tp','-')}</td><td>{data.get('capital_pct','-')}%</td></tr>"""
+        tag = "tag-long" if data.get('action') == "LONG" else "tag-short"
+        html_content += f"""<tr><td><strong>{asset}</strong></td><td><span class="tag {tag}">{data.get('action','-')}</span></td><td>{data.get('entry_price','-')}</td><td>{data.get('levier','-')}x</td><td style="color:var(--red)">{data.get('sl','-')}</td><td style="color:var(--green)">{data.get('tp','-')}</td><td>{data.get('capital_pct','-')}%</td></tr>"""
     if not positions: html_content += "<tr><td colspan='7' style='text-align:center; padding: 30px; color:#768390;'>Aucune position ouverte.</td></tr>"
     html_content += """
                             </tbody>
@@ -136,8 +136,8 @@ def generate_dashboards(config, trades, positions, last_decision):
     for t in reversed(trades[-50:]):
         pnl = t.get('pnl_net_pct')
         pnl_display = f"<span style='color:{'var(--green)' if pnl >=0 else 'var(--red)'}'>{pnl:+.2f}%</span>" if pnl is not None else "-"
-        tag = "tag-long" if t['action'] in ["LONG", "OPEN"] else ("tag-short" if t['action'] in ["SHORT", "SELL"] else "")
-        html_content += f"""<tr><td style="color:#768390">{t['timestamp']}</td><td>{t.get('asset', 'BTC/USDT')}</td><td><span class="tag {tag}">{t['action']}</span></td><td>{t['price']}</td><td><strong>{pnl_display}</strong></td></tr>"""
+        tag = "tag-long" if t.get('action') in ["LONG", "OPEN"] else ("tag-short" if t.get('action') in ["SHORT", "SELL"] else "")
+        html_content += f"""<tr><td style="color:#768390">{t.get('timestamp','-')}</td><td>{t.get('asset', 'BTC/USDT')}</td><td><span class="tag {tag}">{t.get('action','-')}</span></td><td>{t.get('price','-')}</td><td><strong>{pnl_display}</strong></td></tr>"""
     html_content += f"""
                                 </tbody>
                             </table>
