@@ -420,5 +420,23 @@
         "raisonnement": "AUTO-CLOSE: Stop Loss atteint (91.12 <= 149.25)",
         "model_used": "N/A",
         "pnl_net_pct": 18.23920177383595
+    },
+    {
+        "timestamp": "2026-03-23 18:04:38",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2154.36,
+        "levier": 3,
+        "raisonnement": "Le PNL actuel (42.37%) est largement sup\u00e9rieur \u00e0 l'objectif (17.0%), ce qui active la strat\u00e9gie de s\u00e9curisation. Cette phase requiert l'utilisation d'un levier faible (1-5x) pour prot\u00e9ger les gains acquis. Nous initions une position LONG conservatrice avec un levier mod\u00e9r\u00e9 (3x) pour continuer \u00e0 capter un potentiel de continuation haussi\u00e8re sur l'ETH, tout en maintenant un risque contr\u00f4l\u00e9 pour pr\u00e9server la performance du portefeuille.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 18:04:41",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 71085.3,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
     }
 ]
