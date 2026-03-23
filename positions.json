@@ -1,10 +1,10 @@
 {
     "BTC/USDT": {
-        "entry_price": 67480.9,
+        "entry_price": 67906.0,
         "action": "LONG",
         "levier": 10,
-        "sl": 67100.0,
-        "tp": 69150.0,
-        "timestamp": "2026-03-23 08:07:31"
+        "sl": 67500.0,
+        "tp": 68750.0,
+        "timestamp": "2026-03-23 07:19:45"
     }
 }
