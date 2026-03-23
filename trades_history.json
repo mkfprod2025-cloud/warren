@@ -168,5 +168,13 @@
         "levier": 10,
         "raisonnement": "analyse technique et macro ultra-d\u00e9taill\u00e9e",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 07:46:49",
+        "action": "LONG",
+        "price": 68366.7,
+        "levier": 10,
+        "raisonnement": "L'analyse macro 'Warren Profond' indique une phase de l\u00e9g\u00e8re accumulation post-consolidation. La divergence entre le dernier prix de transaction (68366.7) et le spread Bid/Ask ultra-serr\u00e9 (68348.0/68348.1) sugg\u00e8re une pression acheteuse latente, non encore pleinement absorb\u00e9e par le march\u00e9. Bien que l'\u00e9quilibre soit fragile, l'objectif \u00e0 long terme (15% d'ici 2026-03-24) justifie une prise de position LONG calcul\u00e9e. Le levier est ajust\u00e9 pour optimiser le rendement sans sur-exposer le capital. Les niveaux de Stop Loss et Take Profit sont \u00e9tablis sur des zones de support/r\u00e9sistance cl\u00e9s pour valider ou invalider rapidement l'hypoth\u00e8se directionnelle.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
