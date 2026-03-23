@@ -16,11 +16,11 @@
         "timestamp": "2026-03-23 08:50:12"
     },
     "SOL/USDT": {
-        "entry_price": 86.1,
+        "entry_price": 85.62,
         "action": "LONG",
         "levier": 10,
-        "sl": 85.0,
-        "tp": 88.1,
-        "timestamp": "2026-03-23 08:49:59"
+        "sl": 84.5,
+        "tp": 90.0,
+        "timestamp": "2026-03-23 09:33:58"
     }
 }

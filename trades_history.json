@@ -228,5 +228,23 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 09:33:50",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 68060.7,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 09:33:58",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 85.62,
+        "levier": 10,
+        "raisonnement": "Le march\u00e9 de SOL/USDT pr\u00e9sente une liquidit\u00e9 imm\u00e9diate avec un spread Bid/Ask tr\u00e8s serr\u00e9 (85.46/85.47), indiquant une bonne profondeur de march\u00e9 pour l'ex\u00e9cution. Dans le contexte de notre 'Test de simulation Warren Profond' et de l'objectif agressif de 15.0% net d'ici le 2026-03-24, il est imp\u00e9ratif d'adopter une strat\u00e9gie proactive. SOL est un actif connu pour sa volatilit\u00e9 et son potentiel de mouvements directionnels forts. Une position LONG est justifi\u00e9e pour capitaliser sur un potentiel momentum haussier. Le prix de 85.62 sugg\u00e8re une pression acheteuse en cours. Le Stop Loss est positionn\u00e9 de mani\u00e8re strat\u00e9gique pour limiter les pertes en cas de retournement inattendu, tandis que le Take Profit cible une extension significative du mouvement, en ligne avec notre objectif agressif et offrant un ratio risque/r\u00e9compense favorable.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
