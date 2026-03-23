@@ -390,5 +390,35 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-23 17:51:00",
+        "asset": "BTC/USDT",
+        "action": "CLOSE",
+        "price": 70956.0,
+        "levier": 1,
+        "raisonnement": "AUTO-CLOSE: Take Profit atteint (70956.0 >= 70350.0)",
+        "model_used": "N/A",
+        "pnl_net_pct": 12.805744605046543
+    },
+    {
+        "timestamp": "2026-03-23 17:51:03",
+        "asset": "ETH/USDT",
+        "action": "CLOSE",
+        "price": 2147.8,
+        "levier": 1,
+        "raisonnement": "AUTO-CLOSE: Stop Loss atteint (2147.8 <= 2975.0)",
+        "model_used": "N/A",
+        "pnl_net_pct": 11.324197829161402
+    },
+    {
+        "timestamp": "2026-03-23 17:51:05",
+        "asset": "SOL/USDT",
+        "action": "CLOSE",
+        "price": 91.12,
+        "levier": 1,
+        "raisonnement": "AUTO-CLOSE: Stop Loss atteint (91.12 <= 149.25)",
+        "model_used": "N/A",
+        "pnl_net_pct": 18.23920177383595
     }
 ]
