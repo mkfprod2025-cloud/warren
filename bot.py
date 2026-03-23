@@ -73,20 +73,14 @@ def generate_dashboards(config, trades, positions, last_decision):
             .card {{ background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 15px; }}
             .card h3 {{ margin: 0; font-size: 11px; color: #768390; text-transform: uppercase; letter-spacing: 1px; }}
             .card p {{ margin: 8px 0 0; font-size: 20px; font-weight: bold; }}
-            
             .brain {{ margin-top: 20px; background: #1c2128; border-left: 4px solid var(--accent); padding: 15px; border-radius: 4px; font-style: italic; line-height: 1.5; }}
-            
             .main-view {{ display: grid; grid-template-columns: 1fr 350px; gap: 20px; margin-top: 20px; }}
             .table-container {{ background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 15px; overflow-x: auto; }}
             h2 {{ font-size: 16px; margin-top: 0; color: var(--accent); display: flex; align-items: center; gap: 8px; }}
-            
             table {{ width: 100%; border-collapse: collapse; font-size: 12px; }}
             th {{ text-align: left; padding: 10px; color: #768390; border-bottom: 2px solid var(--border); }}
             td {{ padding: 10px; border-bottom: 1px solid var(--border); }}
-            
             .history-scroll {{ max-height: 400px; overflow-y: auto; }}
-            
-            /* CONSOLE */
             .console {{ background: #0d1117; border: 1px solid var(--accent); border-radius: 8px; padding: 15px; position: sticky; top: 15px; }}
             .form-group {{ margin-bottom: 12px; }}
             label {{ display: block; font-size: 11px; color: #768390; margin-bottom: 5px; }}
@@ -96,8 +90,6 @@ def generate_dashboards(config, trades, positions, last_decision):
             .btn-start {{ background: var(--green); color: white; }}
             .btn-stop {{ background: var(--red); color: white; }}
             .btn-update {{ background: var(--accent); color: white; grid-column: span 2; }}
-            button:hover {{ opacity: 0.8; transform: translateY(-1px); }}
-            
             .tag {{ padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }}
             .tag-long {{ background: rgba(63, 185, 80, 0.2); color: var(--green); }}
             .tag-short {{ background: rgba(248, 81, 73, 0.2); color: var(--red); }}
@@ -109,133 +101,73 @@ def generate_dashboards(config, trades, positions, last_decision):
                 <h1>📈 WARREN AI <small style="font-size: 12px; color: #768390; font-weight: normal;">PRO TERMINAL v3.5</small></h1>
                 <span class="status-badge {status_class}">{status_text}</span>
             </div>
-            
             <div class="grid">
                 <div class="card"><h3>Actifs Scan</h3><p>{len(ASSETS_TO_WATCH)} unités</p></div>
-                <div class="card"><h3>PNL Net Global</h3><p style="color: {'var(--green)' if total_pnl >=0 else 'var(--red)'}">{total_pnl:.2f}%</p></div>
-                <div class="card"><h3>Objectif Cible</h3><p>{config.get('target_yield')}%</p></div>
-                <div class="card"><h3>Échéance</h3><p style="font-size: 16px;">{config.get('deadline')}</p></div>
+                <div class="card"><h3>PNL Global</h3><p style="color: {'var(--green)' if total_pnl >=0 else 'var(--red)'}">{total_pnl:.2f}%</p></div>
+                <div class="card"><h3>Objectif</h3><p>{config.get('target_yield')}%</p></div>
+                <div class="card"><h3>Deadline</h3><p style="font-size: 16px;">{config.get('deadline')}</p></div>
             </div>
-
             <div class="brain">
                 <strong style="color:var(--accent); font-style: normal;">🧠 Dernière Analyse ({last_decision.get('asset', 'N/A')}) :</strong> "{last_decision.get('raisonnement', 'En attente de cycle...')}"
             </div>
-
             <div class="main-view">
                 <div class="left-col">
-                    <!-- POSITIONS OUVERTES -->
                     <div class="table-container" style="margin-bottom: 20px;">
                         <h2>📍 Positions Actives</h2>
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Actif</th>
-                                    <th>Action</th>
-                                    <th>Entrée</th>
-                                    <th>Levier</th>
-                                    <th>SL</th>
-                                    <th>TP</th>
-                                    <th>Capital</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>Actif</th><th>Action</th><th>Entrée</th><th>Levier</th><th>SL</th><th>TP</th><th>Capital</th></tr></thead>
                             <tbody>
     """
     for asset, data in positions.items():
         tag = "tag-long" if data['action'] == "LONG" else "tag-short"
-        sl = data.get('sl', 'N/A')
-        tp = data.get('tp', 'N/A')
-        cap = data.get('capital_pct', 'N/A')
-        html_content += f"""
-            <tr>
-                <td><strong>{asset}</strong></td>
-                <td><span class="tag {tag}">{data['action']}</span></td>
-                <td>{data['entry_price']}</td>
-                <td>{data['levier']}x</td>
-                <td style="color:var(--red)">{sl}</td>
-                <td style="color:var(--green)">{tp}</td>
-                <td>{cap}%</td>
-            </tr>"""
-    
+        html_content += f"""<tr><td><strong>{asset}</strong></td><td><span class="tag {tag}">{data['action']}</span></td><td>{data['entry_price']}</td><td>{data['levier']}x</td><td style="color:var(--red)">{data.get('sl','-')}</td><td style="color:var(--green)">{data.get('tp','-')}</td><td>{data.get('capital_pct','-')}%</td></tr>"""
     if not positions: html_content += "<tr><td colspan='7' style='text-align:center; padding: 30px; color:#768390;'>Aucune position ouverte.</td></tr>"
-
     html_content += """
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- HISTORIQUE -->
                     <div class="table-container">
                         <h2>📜 Journal des Trades</h2>
                         <div class="history-scroll">
                             <table>
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Actif</th>
-                                        <th>Ordre</th>
-                                        <th>Prix</th>
-                                        <th>PNL %</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr><th>Date</th><th>Actif</th><th>Ordre</th><th>Prix</th><th>PNL %</th></tr></thead>
                                 <tbody>
     """
-    for t in reversed(trades[-50:]): # Affiche les 50 derniers
+    for t in reversed(trades[-50:]):
         pnl = t.get('pnl_net_pct')
         pnl_display = f"<span style='color:{'var(--green)' if pnl >=0 else 'var(--red)'}'>{pnl:+.2f}%</span>" if pnl is not None else "-"
         tag = "tag-long" if t['action'] in ["LONG", "OPEN"] else ("tag-short" if t['action'] in ["SHORT", "SELL"] else "")
-        html_content += f"""
-            <tr>
-                <td style="color:#768390">{t['timestamp']}</td>
-                <td>{t.get('asset', 'BTC/USDT')}</td>
-                <td><span class="tag {tag}">{t['action']}</span></td>
-                <td>{t['price']}</td>
-                <td><strong>{pnl_display}</strong></td>
-            </tr>"""
-
+        html_content += f"""<tr><td style="color:#768390">{t['timestamp']}</td><td>{t.get('asset', 'BTC/USDT')}</td><td><span class="tag {tag}">{t['action']}</span></td><td>{t['price']}</td><td><strong>{pnl_display}</strong></td></tr>"""
     html_content += f"""
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
                 <div class="right-col">
                     <div class="console">
                         <h2>🎮 Warren Remote</h2>
-                        <div class="form-group">
-                            <label>Instruction Macro</label>
-                            <textarea id="macro" rows="3" placeholder="Instructions IA...">{config.get('macro_info', '')}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Focus Actif</label>
-                            <input type="text" id="asset" value="{config.get('asset')}">
-                        </div>
-                        <div class="form-group">
-                            <label>Objectif ROI %</label>
-                            <input type="number" id="yield" value="{config.get('target_yield')}">
-                        </div>
-                        <div class="form-group">
-                            <label>Date Limite</label>
-                            <input type="date" id="deadline" value="{config.get('deadline')}">
-                        </div>
+                        <div class="form-group"><label>Instruction Macro</label><textarea id="macro" rows="3">{config.get('macro_info', '')}</textarea></div>
+                        <div class="form-group"><label>Focus Actif</label><input type="text" id="asset" value="{config.get('asset')}"></div>
+                        <div class="form-group"><label>Objectif ROI %</label><input type="number" id="yield" value="{config.get('target_yield')}"></div>
+                        <div class="form-group"><label>Date Limite</label><input type="date" id="deadline" value="{config.get('deadline')}"></div>
                         <div class="btn-group">
                             <button class="btn-start" onclick="sendCommand('START')">DÉMARRER</button>
                             <button class="btn-stop" onclick="sendCommand('STOP')">ARRÊTER</button>
-                            <button class="btn-update" onclick="sendCommand('UPDATE_CONFIG')">METTRE À JOUR CONFIGURATION</button>
+                            <button class="btn-update" onclick="sendCommand('UPDATE_CONFIG')">MAJ CONFIG</button>
                         </div>
-                        <p id="log" style="font-size: 11px; margin-top: 15px; color: #768390; text-align: center; min-height: 1.2em;"></p>
+                        <p id="log" style="font-size: 11px; margin-top: 15px; color: #768390; text-align: center;"></p>
                     </div>
                 </div>
             </div>
         </div>
-
         <script>
             async function sendCommand(cmd) {{
-                const token = localStorage.getItem('GITHUB_TOKEN') || prompt('Clé GITHUB_TOKEN requise :');
+                const token = localStorage.getItem('GITHUB_TOKEN') || prompt('GITHUB_TOKEN :');
                 if (!token) return;
                 localStorage.setItem('GITHUB_TOKEN', token);
                 const log = document.getElementById('log');
-                log.innerText = "⏳ Transmission...";
+                log.innerText = "⏳ Envoi...";
                 const payload = {{ ref: 'main', inputs: {{ command: cmd, asset: document.getElementById('asset').value, target_yield: document.getElementById('yield').value, macro_info: document.getElementById('macro').value, deadline: document.getElementById('deadline').value }} }};
                 try {{
                     const res = await fetch('https://api.github.com/repos/mkfprod2025-cloud/warren/actions/workflows/bot.yml/dispatches', {{
@@ -243,9 +175,9 @@ def generate_dashboards(config, trades, positions, last_decision):
                         headers: {{ 'Authorization': `token ${{token}}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }},
                         body: JSON.stringify(payload)
                     }});
-                    if (res.ok) {{ log.innerText = "✅ Succès ! Warren s'actualise."; log.style.color = "var(--green)"; }}
-                    else {{ log.innerText = "❌ Erreur GitHub"; log.style.color = "var(--red)"; }}
-                }} catch (e) {{ log.innerText = "❌ Connexion perdue"; }}
+                    if (res.ok) {{ log.innerText = "✅ Succès !"; log.style.color = "var(--green)"; }}
+                    else {{ log.innerText = "❌ Erreur"; log.style.color = "var(--red)"; }}
+                }} catch (e) {{ log.innerText = "❌ Erreur connexion"; }}
             }}
         </script>
     </body>
@@ -253,40 +185,14 @@ def generate_dashboards(config, trades, positions, last_decision):
     """
     with open(DASHBOARD_HTML, "w", encoding="utf-8") as f: f.write(html_content)
 
-    # 2. GÉNÉRATION MARKDOWN (Résumé Rapide)
-    md_content = f"""# 📈 WARREN AI STATUS (v3.5)
-**État :** {status_text} | **PNL Global :** {total_pnl:.2f}%
-
-### 🧠 Analyse ({last_decision.get('asset', 'N/A')})
-> {last_decision.get('raisonnement', 'N/A')}
-
-### 📍 Positions Actives
-| Actif | Action | Entrée | SL | TP | Cap |
-|---|---|---|---|---|---|
-"""
+    # 2. GÉNÉRATION MARKDOWN
+    md_content = f"""# 📈 WARREN AI STATUS (v3.5)\n**État :** {status_text} | **PNL :** {total_pnl:.2f}%\n\n### 🧠 Analyse ({last_decision.get('asset', 'N/A')})\n> {last_decision.get('raisonnement', 'N/A')}\n\n### 📍 Positions Actives\n| Actif | Action | Entrée | SL | TP | Cap |\n|---|---|---|---|---|---|\n"""
     for asset, data in positions.items():
         md_content += f"| {asset} | {data['action']} | {data['entry_price']} | {data.get('sl','-')} | {data.get('tp','-')} | {data.get('capital_pct','-')}% |\n"
-    
     with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(md_content)
 
 def ask_gemini_pro(asset, config, market_data):
-    prompt = f"""
-    Tu es Warren, un trader IA expert Futures sur BitMart.
-    OBJECTIF : {config['target_yield']}% net d'ici le {config['deadline']}.
-    ACTIF : {asset}
-    MACRO : {config.get('macro_info', 'N/A')}
-    DONNÉES MARCHÉ : Prix {market_data['price']} | Bid/Ask {market_data['best_bid']}/{market_data['best_ask']}
-    
-    RÉPONDS STRICTEMENT EN JSON :
-    {{
-        "raisonnement": "Analyse technique et macro pour {asset}",
-        "action": "LONG" | "SHORT" | "CLOSE" | "HOLD" | "SET_SL_TP",
-        "levier": 1-20,
-        "sl": prix_stop_loss, 
-        "tp": prix_take_profit, 
-        "pourcentage_capital": 1-100
-    }}
-    """
+    prompt = f"""Tu es Warren, trader expert Futures BitMart. OBJECTIF: {config['target_yield']}% net d'ici le {config['deadline']}. ACTIF: {asset}. MACRO: {config.get('macro_info', 'N/A')}. DONNÉES: Prix {market_data['price']} | Bid/Ask {market_data['best_bid']}/{market_data['best_ask']}. RÉPONDS STRICTEMENT EN JSON: {{"raisonnement": "analyse détaillée", "action": "LONG"|"SHORT"|"CLOSE"|"HOLD", "levier": 1-20, "sl": prix, "tp": prix, "pourcentage_capital": 1-100}}"""
     for model_id in MODELS_PRIORITY:
         try:
             response = client.models.generate_content(model=model_id, contents=prompt, config={"response_mime_type": "application/json"})
@@ -301,29 +207,16 @@ def execute(asset, decision, market_data):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     positions = load_json(POSITIONS_FILE, {})
     trades = load_json(TRADES_FILE, [])
-    
     action = decision['action']
     price = market_data['price']
-    
-    trade_info = {
-        "timestamp": timestamp, "asset": asset, "action": action, "price": price, 
-        "levier": decision.get('levier', 1), "raisonnement": decision['raisonnement'],
-        "model_used": decision.get('model_used', 'N/A')
-    }
-
+    trade_info = { "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision['raisonnement'], "model_used": decision.get('model_used', 'N/A') }
     if action in ["LONG", "SHORT"]:
-        positions[asset] = {
-            "entry_price": price, "action": action, "levier": decision['levier'],
-            "sl": decision.get('sl'), "tp": decision.get('tp'), 
-            "capital_pct": decision.get('pourcentage_capital', 10),
-            "timestamp": timestamp
-        }
+        positions[asset] = {{ "entry_price": price, "action": action, "levier": decision['levier'], "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }}
     elif action == "CLOSE" and asset in positions:
         pos = positions[asset]
         pnl = (price - pos['entry_price'])/pos['entry_price'] if pos['action']=="LONG" else (pos['entry_price'] - price)/pos['entry_price']
         trade_info["pnl_net_pct"] = (pnl * pos['levier'] - (2 * FEE_RATE)) * 100
         del positions[asset]
-
     trades.append(trade_info)
     with open(POSITIONS_FILE, "w") as f: json.dump(positions, f, indent=4)
     with open(TRADES_FILE, "w") as f: json.dump(trades, f, indent=4)
@@ -333,14 +226,11 @@ def run_cycle():
     config = get_config()
     trades = load_json(TRADES_FILE, [])
     positions = load_json(POSITIONS_FILE, {})
-    
     if not config.get("bot_running"):
         generate_dashboards(config, trades, positions, {"raisonnement": "Bot en pause."})
         return
-
-    last_decision = {"raisonnement": "Analyse Multi-Trading en cours..."}
+    last_decision = {"raisonnement": "Analyse Multi-Trading..."}
     assets = list(set([config["asset"]] + ASSETS_TO_WATCH))
-    
     for asset in assets:
         data = get_market_data(asset)
         if data:
@@ -349,7 +239,6 @@ def run_cycle():
                 execute(asset, decision, data)
                 last_decision = decision
         time.sleep(1)
-
     generate_dashboards(config, trades, positions, last_decision)
 
 def get_market_data(asset):
@@ -363,14 +252,10 @@ def get_market_data(asset):
         best_bid = float(depth['bids'][0][0]) if depth['bids'] else float(details['last_price'])
         best_ask = float(depth['asks'][0][0]) if depth['asks'] else float(details['last_price'])
         return {"price": float(details['last_price']), "best_bid": best_bid, "best_ask": best_ask}
-    except Exception as e:
-        return None
+    except Exception as e: return None
 
 if __name__ == "__main__":
-    try:
-        run_cycle()
+    try: run_cycle()
     except Exception as e:
         import traceback
-        err = traceback.format_exc()
-        with open(DASHBOARD_MD, "w", encoding="utf-8") as f:
-            f.write(f"# 🚨 ERREUR CRITIQUE v3.5\n```python\n{err}\n```")
+        with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(f"# 🚨 ERREUR CRITIQUE v3.5\n```python\n{traceback.format_exc()}\n```")
