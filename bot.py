@@ -18,7 +18,7 @@ BITMART_MEMO = os.getenv("BITMART_MEMO")
 client = genai.Client(api_key=GENAI_API_KEY)
 
 # Modèles IA (Vérifiés 23/03/2026)
-MODELS_PRIORITY = ["gemini-3.1-pro-preview", "gemini-2.5-pro", "gemini-2.5-flash"]
+MODELS_PRIORITY = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-3.1-pro-preview"]
 
 CONFIG_FILE = "config.json"
 TRADES_FILE = "trades_history.json"
@@ -46,6 +46,27 @@ def load_json(file_path, default):
                 return json.loads(content) if content else default
         except: pass
     return default
+
+def check_auto_close(asset, positions, market_data):
+    """Vérifie si une position doit être fermée via TP ou SL (Sécurité v3.5)"""
+    if asset not in positions: return None
+    pos = positions[asset]
+    price = market_data['price']
+    action = pos['action']
+    sl = pos.get('sl')
+    tp = pos.get('tp')
+    
+    reason = None
+    if action == "LONG":
+        if sl and price <= sl: reason = f"Stop Loss atteint ({price} <= {sl})"
+        if tp and price >= tp: reason = f"Take Profit atteint ({price} >= {tp})"
+    elif action == "SHORT":
+        if sl and price >= sl: reason = f"Stop Loss atteint ({price} >= {sl})"
+        if tp and price <= tp: reason = f"Take Profit atteint ({price} <= {tp})"
+    
+    if reason:
+        return {"action": "CLOSE", "raisonnement": f"AUTO-CLOSE: {reason}", "asset": asset}
+    return None
 
 def generate_dashboards(config, trades, positions, last_decision):
     """Génère le Dashboard HTML5 Pro-View (v3.5)"""
@@ -236,11 +257,15 @@ def run_cycle():
     for asset in assets:
         data = get_market_data(asset)
         if data:
-            decision = ask_gemini_pro(asset, config, data)
+            # Sécurité AUTO-CLOSE v3.5
+            decision = check_auto_close(asset, positions, data)
+            if not decision:
+                decision = ask_gemini_pro(asset, config, data)
+            
             if decision['action'] != "HOLD" or asset == config["asset"]:
                 execute(asset, decision, data)
                 last_decision = decision
-        time.sleep(1)
+        time.sleep(2) # Délai augmenté pour éviter 429
     generate_dashboards(config, trades, positions, last_decision)
 
 def get_market_data(asset):
