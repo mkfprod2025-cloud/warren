@@ -215,11 +215,31 @@ def generate_dashboards(config, trades, positions, last_decision):
 def ask_gemini_pro(asset, config, market_data):
     trades = load_json(TRADES_FILE, [])
     total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
-    prompt = f"""Tu es Warren, trader expert Futures. Ta stratégie est DYNAMIQUE. ROI Cible: {config['target_yield']}%. PNL Actuel: {total_pnl:.2f}%. Actif: {asset}. LOGIQUE: 1. Si loin de l'objectif: Levier 15-20x. 2. Si proche: Levier 1-5x. RÉPONDS STRICTEMENT EN JSON: {{"raisonnement": "...", "action": "LONG"|"SHORT"|"CLOSE"|"HOLD", "levier": 1-20, "sl": prix, "tp": prix, "pourcentage_capital": 1-100}}"""
+    price = market_data['price']
+    prompt = f"""Tu es Warren, trader expert Futures. Prix actuel {asset}: {price}. ROI Cible: {config['target_yield']}%. PNL Actuel: {total_pnl:.2f}%. 
+    STRATÉGIE: 
+    - Si PNL < Objectif: Agression (Levier 15-20x).
+    - Si PNL >= Objectif: Sécurisation (Levier 1-5x).
+    CONSIGNE TP/SL: 
+    - LONG: TP > {price}, SL < {price}.
+    - SHORT: TP < {price}, SL > {price}.
+    RÉPONDS STRICTEMENT EN JSON: {{"raisonnement": "...", "action": "LONG"|"SHORT"|"CLOSE"|"HOLD", "levier": 1-20, "sl": prix, "tp": prix, "pourcentage_capital": 1-100}}"""
     for model_id in MODELS_PRIORITY:
         try:
             response = client.models.generate_content(model=model_id, contents=prompt, config={"response_mime_type": "application/json"})
             decision = response.parsed if response.parsed else json.loads(response.text)
+            
+            # Sanity Check TP/SL v3.5.1
+            act = decision.get('action')
+            sl = decision.get('sl')
+            tp = decision.get('tp')
+            if act == "LONG":
+                if sl and sl >= price: decision['sl'] = price * 0.98
+                if tp and tp <= price: decision['tp'] = price * 1.05
+            elif act == "SHORT":
+                if sl and sl <= price: decision['sl'] = price * 1.02
+                if tp and tp >= price: decision['tp'] = price * 0.95
+                
             decision['model_used'] = model_id
             decision['asset'] = asset
             return decision
