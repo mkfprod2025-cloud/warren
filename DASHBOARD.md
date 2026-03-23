@@ -2,9 +2,9 @@
 **État :** OPÉRATIONNEL | **PNL :** 0.00% | **Actif :** BTC/USDT
 
 ### 🧠 Dernière Analyse
-> L'analyse macro 'Warren Profond' indique une phase de légère accumulation post-consolidation. La divergence entre le dernier prix de transaction (68366.7) et le spread Bid/Ask ultra-serré (68348.0/68348.1) suggère une pression acheteuse latente, non encore pleinement absorbée par le marché. Bien que l'équilibre soit fragile, l'objectif à long terme (15% d'ici 2026-03-24) justifie une prise de position LONG calculée. Le levier est ajusté pour optimiser le rendement sans sur-exposer le capital. Les niveaux de Stop Loss et Take Profit sont établis sur des zones de support/résistance clés pour valider ou invalider rapidement l'hypothèse directionnelle.
+> Étant donné la nature du test de simulation 'Warren Profond', et en l'absence de données techniques ou fondamentales approfondies pour une 'analyse technique et macro ultra-détaillée' en temps réel, cette décision est une simulation d'une approche opportuniste. Le marché est en consolidation apparente autour de 68360.8. Une légère pression acheteuse est perçue par l'écart Bid/Ask. Je choisis une position LONG spéculative, anticipant une continuation haussière mineure. Le levier est modéré pour gérer le risque dans ce contexte simulé. Le Stop Loss et Take Profit sont fixés à des niveaux raisonnables par rapport au point d'entrée pour un rapport risque/récompense de 1:2 environ, visant une cible de profit plausible à court terme tout en protégeant le capital. L'objectif annuel global de 12.0% est gardé en tête pour la gestion du portefeuille sur le long terme.
 
 ### 📍 Positions
 | Actif | Action | Prix Entrée | Levier |
 |---|---|---|---|
-| BTC/USDT | LONG | 68243.0 | 10x |
+| BTC/USDT | LONG | 68366.7 | 10x |
