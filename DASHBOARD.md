@@ -1,8 +1,8 @@
 # 📈 WARREN AI STATUS (v3.4)
 **État :** OPÉRATIONNEL | **PNL :** 0.00% | **Actifs suivis :** BTC/USDT, ETH/USDT, SOL/USDT
 
-### 🧠 Dernière Analyse (SOL/USDT)
-> Le marché de SOL/USDT présente une liquidité immédiate avec un spread Bid/Ask très serré (85.46/85.47), indiquant une bonne profondeur de marché pour l'exécution. Dans le contexte de notre 'Test de simulation Warren Profond' et de l'objectif agressif de 15.0% net d'ici le 2026-03-24, il est impératif d'adopter une stratégie proactive. SOL est un actif connu pour sa volatilité et son potentiel de mouvements directionnels forts. Une position LONG est justifiée pour capitaliser sur un potentiel momentum haussier. Le prix de 85.62 suggère une pression acheteuse en cours. Le Stop Loss est positionné de manière stratégique pour limiter les pertes en cas de retournement inattendu, tandis que le Take Profit cible une extension significative du mouvement, en ligne avec notre objectif agressif et offrant un ratio risque/récompense favorable.
+### 🧠 Dernière Analyse (ETH/USDT)
+> Le marché ETH/USDT montre une légère consolidation autour du niveau de 2035.02. L'écart Bid/Ask serré (2033.66/2033.67) indique une bonne liquidité. Compte tenu de notre objectif agressif de 15% net d'ici mars 2026 et du contexte de 'Test de simulation Warren Profond', j'identifie une opportunité de 'LONG'. Mes modèles internes suggèrent un potentiel de rebond ou de continuation haussière à court terme, suite à un possible test de support invisible. La stratégie vise à capitaliser sur une impulsion directionnelle rapide. La gestion du risque est primordiale, même avec un objectif agressif, d'où la mise en place de SL/TP précis.
 
 ### 📍 Positions
 | Actif | Action | Prix Entrée | Levier |
