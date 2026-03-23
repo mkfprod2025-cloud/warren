@@ -291,5 +291,14 @@
         "levier": 10,
         "raisonnement": "\u00c9tant donn\u00e9 le 'Test de simulation Warren Profond' et l'objectif agressif de 15% net, je d\u00e9tecte un potentiel haussier \u00e0 court terme pour ETH/USDT. Le prix actuel de 2043.0, avec un spread bid/ask serr\u00e9 \u00e0 2042.41/2042.42, indique une liquidit\u00e9 imm\u00e9diate. Mes mod\u00e8les pour les simulations agressives sugg\u00e8rent une opportunit\u00e9 d'entr\u00e9e LONG. Je viserai un mouvement haussier calcul\u00e9, utilisant un levier mod\u00e9r\u00e9 mais efficace pour contribuer \u00e0 l'objectif de profit global. Le risque est g\u00e9r\u00e9 par un stop-loss strat\u00e9gique pour prot\u00e9ger le capital tout en maximisant le potentiel de gain.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 11:54:52",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 70367.9,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
     }
 ]
