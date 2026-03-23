@@ -7,4 +7,4 @@
 ### 📍 Positions
 | Actif | Action | Prix Entrée | Levier |
 |---|---|---|---|
-| BTC/USDT | LONG | 67808.2 | 10x |
+| BTC/USDT | LONG | 68218.2 | 10x |

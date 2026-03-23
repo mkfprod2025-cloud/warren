@@ -160,5 +160,13 @@
         "levier": 10,
         "raisonnement": "analyse technique et macro ultra-d\u00e9taill\u00e9e",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 07:44:15",
+        "action": "LONG",
+        "price": 68243.0,
+        "levier": 10,
+        "raisonnement": "analyse technique et macro ultra-d\u00e9taill\u00e9e",
+        "model_used": "gemini-2.5-flash"
     }
 ]
