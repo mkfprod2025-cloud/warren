@@ -128,5 +128,13 @@
         "levier": 10,
         "raisonnement": "L'analyse des donn\u00e9es de march\u00e9 sur 15m et 1h r\u00e9v\u00e8le une dynamique baissi\u00e8re r\u00e9cente. Le prix actuel (68669.8) est en dessous des prix de cl\u00f4ture r\u00e9cents sur les deux \u00e9chelles de temps, notamment la derni\u00e8re bougie de 15m qui a cl\u00f4tur\u00e9 \u00e0 68681.3 apr\u00e8s une ouverture \u00e0 68779.1. La bougie horaire actuelle a \u00e9galement montr\u00e9 un mouvement de 68761.9 \u00e0 68681.3. Cela indique une pression vendeuse persistante. Un mouvement de correction ou une continuation de la tendance baissi\u00e8re est anticip\u00e9. J'ouvre une position SHORT avec un levier mod\u00e9r\u00e9 pour capturer ce mouvement. Le stop-loss est plac\u00e9 au-dessus des r\u00e9sistances r\u00e9centes (pics autour de 68800-68850), et le take-profit vise un niveau de support inf\u00e9rieur, visant un ratio risque/rendement favorable.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-23 08:07:31",
+        "action": "LONG",
+        "price": 67480.9,
+        "levier": 10,
+        "raisonnement": "analyse technique et macro ultra-d\u00e9taill\u00e9e",
+        "model_used": "gemini-2.5-flash"
     }
 ]

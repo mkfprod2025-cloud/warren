@@ -268,4 +268,11 @@ def get_market_data(asset):
         return None
 
 if __name__ == "__main__":
-    run_cycle()
+    try:
+        run_cycle()
+    except Exception as e:
+        import traceback
+        err = traceback.format_exc()
+        print(f"ERREUR CRITIQUE: {e}")
+        with open(DASHBOARD_MD, "w", encoding="utf-8") as f:
+            f.write(f"# 🚨 ERREUR CRITIQUE DU BOT\n```python\n{err}\n```")
