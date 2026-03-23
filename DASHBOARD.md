@@ -1,12 +1,12 @@
 # 📈 WARREN AI STATUS (v3.4)
 **État :** OPÉRATIONNEL | **PNL :** 0.00% | **Actifs suivis :** BTC/USDT, ETH/USDT, SOL/USDT
 
-### 🧠 Dernière Analyse (SOL/USDT)
-> Le prix de référence à 85.39 est légèrement en dessous du bid actuel à 85.51, ce qui pourrait indiquer une absorption de la vente récente et une légère pression acheteuse en cours. L'écart Bid/Ask (85.51/85.52) est très serré, suggérant une bonne liquidité. Dans le cadre d'un 'Test de simulation Warren Profond' avec un 'Objectif agressif', je cherche à capitaliser sur le momentum positif potentiel à très court terme. Une position LONG s'aligne sur l'idée d'un rebond ou d'une continuation haussière après le test de 85.39, visant à capturer un mouvement rapide avec un ratio risque/rendement favorable. La volatilité de SOL/USDT permet d'atteindre l'objectif agressif avec un levier contrôlé.
+### 🧠 Dernière Analyse (ETH/USDT)
+> Étant donné le 'Test de simulation Warren Profond' et l'objectif agressif de 15% net, je détecte un potentiel haussier à court terme pour ETH/USDT. Le prix actuel de 2043.0, avec un spread bid/ask serré à 2042.41/2042.42, indique une liquidité immédiate. Mes modèles pour les simulations agressives suggèrent une opportunité d'entrée LONG. Je viserai un mouvement haussier calculé, utilisant un levier modéré mais efficace pour contribuer à l'objectif de profit global. Le risque est géré par un stop-loss stratégique pour protéger le capital tout en maximisant le potentiel de gain.
 
 ### 📍 Positions
 | Actif | Action | Prix Entrée | Levier |
 |---|---|---|---|
 | BTC/USDT | LONG | 68086.2 | 8x |
-| ETH/USDT | LONG | 2035.02 | 12x |
-| SOL/USDT | LONG | 85.62 | 10x |
+| ETH/USDT | LONG | 2036.01 | 15x |
+| SOL/USDT | LONG | 85.39 | 12x |
