@@ -1,29 +1,29 @@
 {
     "SOL/USDT": {
-        "entry_price": 91.44,
+        "entry_price": 91.5,
         "action": "LONG",
-        "levier": 18,
+        "levier": 17,
         "sl": 89.0,
-        "tp": 95.5,
-        "capital_pct": 50,
-        "timestamp": "2026-03-24 11:32:03"
+        "tp": 96.5,
+        "capital_pct": 100,
+        "timestamp": "2026-03-24 12:34:35"
     },
     "ETH/USDT": {
-        "entry_price": 2160.95,
+        "entry_price": 2158.88,
         "action": "LONG",
-        "levier": 18,
-        "sl": 2150.0,
-        "tp": 2200.0,
-        "capital_pct": 50,
-        "timestamp": "2026-03-24 11:31:50"
+        "levier": 20,
+        "sl": 2120.0,
+        "tp": 2209.61,
+        "capital_pct": 15,
+        "timestamp": "2026-03-24 12:34:51"
     },
     "BTC/USDT": {
-        "entry_price": 71039.9,
+        "entry_price": 70853.1,
         "action": "LONG",
         "levier": 18,
-        "sl": 70500.0,
-        "tp": 72800.0,
-        "capital_pct": 50,
-        "timestamp": "2026-03-24 11:31:56"
+        "sl": 69800.0,
+        "tp": 72900.0,
+        "capital_pct": 80,
+        "timestamp": "2026-03-24 12:34:43"
     }
 }

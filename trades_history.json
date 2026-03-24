@@ -584,5 +584,32 @@
         "levier": 18,
         "raisonnement": "Mon PNL actuel (0.00%) est tr\u00e8s inf\u00e9rieur \u00e0 mon objectif de ROI (47.0%). Selon ma strat\u00e9gie, je dois adopter une approche agressive pour atteindre cet objectif. Cela implique l'utilisation d'un levier \u00e9lev\u00e9 (15-20x). Je vais ouvrir une position LONG, anticipant une hausse du prix de SOL/USDT, avec un TP et SL en accord avec la consigne.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 12:34:35",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 91.5,
+        "levier": 17,
+        "raisonnement": "Le PNL actuel (0.00%) est inf\u00e9rieur \u00e0 l'objectif de 47.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie, une approche agressive est requise. En l'absence de position ouverte, une position LONG est initi\u00e9e avec un levier \u00e9lev\u00e9 pour viser le ROI cible. Le TP est fix\u00e9 au-dessus du prix actuel et le SL en dessous pour g\u00e9rer le risque.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 12:34:43",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 70853.1,
+        "levier": 18,
+        "raisonnement": "Mon PNL actuel est de 0.00%, ce qui est inf\u00e9rieur \u00e0 l'objectif de 47.0%. Conform\u00e9ment \u00e0 ma strat\u00e9gie d'agression, je vais ouvrir une position LONG avec un levier \u00e9lev\u00e9 pour viser un retour rapide vers l'objectif de ROI. Les niveaux de TP et SL sont d\u00e9finis par rapport au prix actuel pour g\u00e9rer le risque.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 12:34:51",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2158.88,
+        "levier": 20,
+        "raisonnement": "Le PNL actuel est \u00e0 0.00%, ce qui est inf\u00e9rieur \u00e0 notre objectif de 47.0%. Conform\u00e9ment \u00e0 notre strat\u00e9gie, nous devons adopter une approche agressive. J'ouvre une position LONG avec un levier \u00e9lev\u00e9 pour maximiser le potentiel de gain et atteindre rapidement notre objectif de ROI.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
