@@ -31,7 +31,7 @@ FEE_RATE = 0.0006
 ASSETS_TO_WATCH = ["BTC/USDT", "ETH/USDT", "SOL/USDT"]
 
 def get_config():
-    default = {"bot_running": False, "demo_mode": True, "asset": "BTC/USDT", "target_yield": 15.0, "deadline": "2026-03-24", "macro_info": ""}
+    default = {"bot_running": False, "demo_mode": True, "asset": "BTC/USDT", "target_yield": 15.0, "deadline": "2026-03-24", "macro_info": "", "pnl_reset_date": "2026-03-24 00:00:00"}
     if os.path.exists(CONFIG_FILE):
         try:
             with open(CONFIG_FILE, "r") as f: return json.load(f)
@@ -46,6 +46,16 @@ def load_json(file_path, default):
                 return json.loads(content) if content else default
         except: pass
     return default
+
+def get_wallet_balance():
+    """Récupère le solde USDT réel sur BitMart (v3.5.2)"""
+    try:
+        contract_api = APIContract(BITMART_API_KEY, BITMART_SECRET, BITMART_MEMO)
+        res = contract_api.get_account_balance("USDT")
+        if res and 'data' in res[0] and 'available_balance' in res[0]['data']:
+            return float(res[0]['data']['available_balance'])
+    except: pass
+    return 0.0
 
 def check_auto_close(asset, positions, market_data):
     """Vérifie si une position doit être fermée via TP ou SL (Sécurité v3.5)"""
@@ -69,11 +79,16 @@ def check_auto_close(asset, positions, market_data):
     return None
 
 def generate_dashboards(config, trades, positions, last_decision):
-    """Génère le Dashboard HTML5 Pro-View (v3.5)"""
+    """Génère le Dashboard HTML5 Pro-View (v3.5.2)"""
     status_class = "status-active" if config.get("bot_running") else "status-stopped"
     status_text = "OPÉRATIONNEL" if config.get("bot_running") else "EN PAUSE"
-    total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
     
+    # Reset PNL Logic
+    reset_date = config.get("pnl_reset_date", "2000-01-01 00:00:00")
+    relevant_trades = [t for t in trades if t.get('timestamp', '0') >= reset_date]
+    total_pnl = sum([t.get('pnl_net_pct', 0) for t in relevant_trades if 'pnl_net_pct' in t])
+    wallet_balance = get_wallet_balance()
+
     # 1. GÉNÉRATION HTML
     html_content = f"""
     <!DOCTYPE html>
@@ -82,6 +97,15 @@ def generate_dashboards(config, trades, positions, last_decision):
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>WARREN AI - Pro Terminal</title>
+    <!-- Améliorations Dashboard 24/03/2026 -->
+    <meta http-equiv="refresh" content="3600">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Warren Bot">
+    <link rel="apple-touch-icon" href="assets/warren.png">
+    <link rel="icon" type="image/png" href="assets/warren.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0e14">
         <style>
             :root {{ --bg: #0a0e14; --card: #151b23; --text: #adbac7; --accent: #58a6ff; --green: #3fb950; --red: #f85149; --border: #30363d; }}
             body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; font-size: 14px; }}
@@ -90,10 +114,10 @@ def generate_dashboards(config, trades, positions, last_decision):
             .status-badge {{ padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; }}
             .status-active {{ background: rgba(63, 185, 80, 0.15); color: var(--green); border: 1px solid var(--green); }}
             .status-stopped {{ background: rgba(248, 81, 73, 0.15); color: var(--red); border: 1px solid var(--red); }}
-            .grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }}
+            .grid {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }}
             .card {{ background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 15px; }}
             .card h3 {{ margin: 0; font-size: 11px; color: #768390; text-transform: uppercase; letter-spacing: 1px; }}
-            .card p {{ margin: 8px 0 0; font-size: 20px; font-weight: bold; }}
+            .card p {{ margin: 8px 0 0; font-size: 18px; font-weight: bold; }}
             .brain {{ margin-top: 20px; background: #1c2128; border-left: 4px solid var(--accent); padding: 15px; border-radius: 4px; font-style: italic; line-height: 1.5; }}
             .main-view {{ display: grid; grid-template-columns: 1fr 350px; gap: 20px; margin-top: 20px; }}
             .table-container {{ background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 15px; overflow-x: auto; }}
@@ -123,10 +147,11 @@ def generate_dashboards(config, trades, positions, last_decision):
                 <span class="status-badge {status_class}">{status_text}</span>
             </div>
             <div class="grid">
+                <div class="card"><h3>Wallet</h3><p style="color:var(--accent)">{wallet_balance:.2f} USDT</p></div>
+                <div class="card"><h3>Session PNL</h3><p style="color: {'var(--green)' if total_pnl >=0 else 'var(--red)'}">{total_pnl:.2f}%</p></div>
                 <div class="card"><h3>Actifs Scan</h3><p>{len(ASSETS_TO_WATCH)} unités</p></div>
-                <div class="card"><h3>PNL Global</h3><p style="color: {'var(--green)' if total_pnl >=0 else 'var(--red)'}">{total_pnl:.2f}%</p></div>
                 <div class="card"><h3>Objectif</h3><p>{config.get('target_yield')}%</p></div>
-                <div class="card"><h3>Deadline</h3><p style="font-size: 16px;">{config.get('deadline')}</p></div>
+                <div class="card"><h3>Deadline</h3><p style="font-size: 14px;">{config.get('deadline')}</p></div>
             </div>
             <div class="brain">
                 <strong style="color:var(--accent); font-style: normal;">🧠 Dernière Analyse ({last_decision.get('asset', 'N/A')}) :</strong> "{last_decision.get('raisonnement', 'En attente de cycle...')}"
@@ -143,7 +168,7 @@ def generate_dashboards(config, trades, positions, last_decision):
         tag = "tag-long" if data.get('action') == "LONG" else "tag-short"
         html_content += f"""<tr><td><strong>{asset}</strong></td><td><span class="tag {tag}">{data.get('action','-')}</span></td><td>{data.get('entry_price','-')}</td><td>{data.get('levier','-')}x</td><td style="color:var(--red)">{data.get('sl','-')}</td><td style="color:var(--green)">{data.get('tp','-')}</td><td>{data.get('capital_pct','-')}%</td></tr>"""
     if not positions: html_content += "<tr><td colspan='7' style='text-align:center; padding: 30px; color:#768390;'>Aucune position ouverte.</td></tr>"
-    html_content += """
+    html_content += f"""
                             </tbody>
                         </table>
                     </div>
@@ -158,7 +183,7 @@ def generate_dashboards(config, trades, positions, last_decision):
         pnl = t.get('pnl_net_pct')
         pnl_display = f"<span style='color:{'var(--green)' if pnl >=0 else 'var(--red)'}'>{pnl:+.2f}%</span>" if pnl is not None else "-"
         tag = "tag-long" if t.get('action') in ["LONG", "OPEN"] else ("tag-short" if t.get('action') in ["SHORT", "SELL"] else "")
-        html_content += f"""<tr><td style="color:#768390">{t.get('timestamp','-')}</td><td>{t.get('asset', 'BTC/USDT')}</td><td><span class="tag {tag}">{t.get('action','-')}</span></td><td>{t.get('price','-')}</td><td><strong>{pnl_display}</strong></td></tr>"""
+        html_content += f"""<tr><td style="color:#768390">{{t.get('timestamp','-')}}</td><td>{{t.get('asset', 'BTC/USDT')}}</td><td><span class="tag {{tag}}">{{t.get('action','-')}}</span></td><td>{{t.get('price','-')}}</td><td><strong>{{pnl_display}}</strong></td></tr>"""
     html_content += f"""
                                 </tbody>
                             </table>
@@ -168,10 +193,10 @@ def generate_dashboards(config, trades, positions, last_decision):
                 <div class="right-col">
                     <div class="console">
                         <h2>🎮 Warren Remote</h2>
-                        <div class="form-group"><label>Instruction Macro</label><textarea id="macro" rows="3">{config.get('macro_info', '')}</textarea></div>
-                        <div class="form-group"><label>Focus Actif</label><input type="text" id="asset" value="{config.get('asset')}"></div>
-                        <div class="form-group"><label>Objectif ROI %</label><input type="number" id="yield" value="{config.get('target_yield')}"></div>
-                        <div class="form-group"><label>Date Limite</label><input type="date" id="deadline" value="{config.get('deadline')}"></div>
+                        <div class="form-group"><label>Instruction Macro</label><textarea id="macro" rows="3">{{config.get('macro_info', '')}}</textarea></div>
+                        <div class="form-group"><label>Focus Actif</label><input type="text" id="asset" value="{{config.get('asset')}}"></div>
+                        <div class="form-group"><label>Objectif ROI %</label><input type="number" id="yield" value="{{config.get('target_yield')}}"></div>
+                        <div class="form-group"><label>Date Limite</label><input type="date" id="deadline" value="{{config.get('deadline')}}"></div>
                         <div class="btn-group">
                             <button class="btn-start" onclick="sendCommand('START')">DÉMARRER</button>
                             <button class="btn-stop" onclick="sendCommand('STOP')">ARRÊTER</button>
@@ -207,22 +232,25 @@ def generate_dashboards(config, trades, positions, last_decision):
     with open(DASHBOARD_HTML, "w", encoding="utf-8") as f: f.write(html_content)
 
     # 2. GÉNÉRATION MARKDOWN
-    md_content = f"""# 📈 WARREN AI STATUS (v3.5)\n**État :** {status_text} | **PNL :** {total_pnl:.2f}%\n\n### 🧠 Analyse ({last_decision.get('asset', 'N/A')})\n> {last_decision.get('raisonnement', 'N/A')}\n\n### 📍 Positions Actives\n| Actif | Action | Entrée | SL | TP | Cap |\n|---|---|---|---|---|---|\n"""
+    md_content = f"""# 📈 WARREN AI STATUS (v3.5)\n**État :** {{status_text}} | **PNL :** {{total_pnl:.2f}}%\n\n### 🧠 Analyse ({{last_decision.get('asset', 'N/A')}})\n> {{last_decision.get('raisonnement', 'N/A')}}\n\n### 📍 Positions Actives\n| Actif | Action | Entrée | SL | TP | Cap |\n|---|---|---|---|---|---|\n"""
     for asset, data in positions.items():
-        md_content += f"| {asset} | {data.get('action','-')} | {data.get('entry_price','-')} | {data.get('sl','-')} | {data.get('tp','-')} | {data.get('capital_pct','-')}% |\n"
+        md_content += f"| {{asset}} | {{data.get('action','-')}} | {{data.get('entry_price','-')}} | {{data.get('sl','-')}} | {{data.get('tp','-')}} | {{data.get('capital_pct','-')}}% |\n"
     with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(md_content)
 
 def ask_gemini_pro(asset, config, market_data):
     trades = load_json(TRADES_FILE, [])
-    total_pnl = sum([t.get('pnl_net_pct', 0) for t in trades if 'pnl_net_pct' in t])
+    reset_date = config.get("pnl_reset_date", "2000-01-01 00:00:00")
+    relevant_trades = [t for t in trades if t.get('timestamp', '0') >= reset_date]
+    total_pnl = sum([t.get('pnl_net_pct', 0) for t in relevant_trades if 'pnl_net_pct' in t])
+    
     price = market_data['price']
-    prompt = f"""Tu es Warren, trader expert Futures. Prix actuel {asset}: {price}. ROI Cible: {config['target_yield']}%. PNL Actuel: {total_pnl:.2f}%. 
+    prompt = f"""Tu es Warren, trader expert Futures. Prix actuel {{asset}}: {{price}}. ROI Cible: {{config['target_yield']}}%. PNL Actuel: {{total_pnl:.2f}}%. 
     STRATÉGIE: 
     - Si PNL < Objectif: Agression (Levier 15-20x).
     - Si PNL >= Objectif: Sécurisation (Levier 1-5x).
     CONSIGNE TP/SL: 
-    - LONG: TP > {price}, SL < {price}.
-    - SHORT: TP < {price}, SL > {price}.
+    - LONG: TP > {{price}}, SL < {{price}}.
+    - SHORT: TP < {{price}}, SL > {{price}}.
     RÉPONDS STRICTEMENT EN JSON: {{"raisonnement": "...", "action": "LONG"|"SHORT"|"CLOSE"|"HOLD", "levier": 1-20, "sl": prix, "tp": prix, "pourcentage_capital": 1-100}}"""
     for model_id in MODELS_PRIORITY:
         try:
@@ -252,9 +280,9 @@ def execute(asset, decision, market_data):
     trades = load_json(TRADES_FILE, [])
     action = decision['action']
     price = market_data['price']
-    trade_info = { "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision.get('raisonnement','N/A'), "model_used": decision.get('model_used', 'N/A') }
+    trade_info = {{ "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision.get('raisonnement','N/A'), "model_used": decision.get('model_used', 'N/A') }}
     if action in ["LONG", "SHORT"]:
-        positions[asset] = { "entry_price": price, "action": action, "levier": decision.get('levier', 1), "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }
+        positions[asset] = {{ "entry_price": price, "action": action, "levier": decision.get('levier', 1), "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }}
     elif action == "CLOSE" and asset in positions:
         pos = positions[asset]
         pnl = (price - pos['entry_price'])/pos['entry_price'] if pos['action']=="LONG" else (pos['entry_price'] - price)/pos['entry_price']
@@ -270,9 +298,9 @@ def run_cycle():
     trades = load_json(TRADES_FILE, [])
     positions = load_json(POSITIONS_FILE, {})
     if not config.get("bot_running"):
-        generate_dashboards(config, trades, positions, {"raisonnement": "Bot en pause."})
+        generate_dashboards(config, trades, positions, {{"raisonnement": "Bot en pause."}})
         return
-    last_decision = {"raisonnement": "Analyse Multi-Trading..."}
+    last_decision = {{"raisonnement": "Analyse Multi-Trading..."}}
     assets = list(set([config["asset"]] + ASSETS_TO_WATCH))
     for asset in assets:
         data = get_market_data(asset)
@@ -298,11 +326,11 @@ def get_market_data(asset):
         depth = contract_api.get_depth(symbol)[0]['data']
         best_bid = float(depth['bids'][0][0]) if depth['bids'] else float(details['last_price'])
         best_ask = float(depth['asks'][0][0]) if depth['asks'] else float(details['last_price'])
-        return {"price": float(details['last_price']), "best_bid": best_bid, "best_ask": best_ask}
+        return {{"price": float(details['last_price']), "best_bid": best_bid, "best_ask": best_ask}}
     except Exception: return None
 
 if __name__ == "__main__":
     try: run_cycle()
     except Exception as e:
         import traceback
-        with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(f"# 🚨 ERREUR CRITIQUE v3.5\n```python\n{traceback.format_exc()}\n```")
+        with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(f"# 🚨 ERREUR CRITIQUE v3.5\n```python\n{{traceback.format_exc()}}\n```")
