@@ -1,0 +1,21 @@
+{
+  "short_name": "Warren",
+  "name": "Warren AI Bot Pro",
+  "icons": [
+    {
+      "src": "assets/warren.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/warren.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#0a0e14",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#0a0e14"
+}
