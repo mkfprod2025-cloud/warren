@@ -1,8 +1,8 @@
 # 📈 WARREN AI STATUS (v3.5)
-**État :** EN PAUSE | **PNL :** 0.00%
+**État :** OPÉRATIONNEL | **PNL :** 0.00%
 
-### 🧠 Analyse (N/A)
-> Bot en pause.
+### 🧠 Analyse (BTC/USDT)
+> AUTO-CLOSE: Take Profit atteint (71161.0 >= 70800.0)
 
 ### 📍 Positions Actives
 | Actif | Action | Entrée | SL | TP | Cap |
