@@ -1,11 +1,11 @@
 # 📈 WARREN AI STATUS (v3.5)
 **État :** OPÉRATIONNEL | **PNL :** 0.00%
 
-### 🧠 Analyse (BTC/USDT)
-> AUTO-CLOSE: Take Profit atteint (71161.0 >= 70800.0)
+### 🧠 Analyse (SOL/USDT)
+> Mon PNL actuel (0.00%) est bien inférieur à mon objectif de ROI (47.0%). Conformément à ma stratégie, je dois adopter une approche agressive. Je vais initier une position LONG avec un levier élevé pour maximiser le potentiel de profit. Je fixe un Take Profit au-dessus du prix actuel et un Stop Loss en dessous pour gérer le risque.
 
 ### 📍 Positions Actives
 | Actif | Action | Entrée | SL | TP | Cap |
 |---|---|---|---|---|---|
-| SOL/USDT | SHORT | 91.31 | 92.05 | 90.6 | 10% |
-| BTC/USDT | LONG | 70655.8 | 70500.0 | 70800.0 | 10% |
+| SOL/USDT | LONG | 91.86 | 90.5 | 93.75 | 15% |
+| ETH/USDT | LONG | 2159.68 | 2133.5 | 2215.0 | 30% |
