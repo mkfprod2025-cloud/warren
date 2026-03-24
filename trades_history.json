@@ -611,5 +611,32 @@
         "levier": 20,
         "raisonnement": "Le PNL actuel est \u00e0 0.00%, ce qui est inf\u00e9rieur \u00e0 notre objectif de 47.0%. Conform\u00e9ment \u00e0 notre strat\u00e9gie, nous devons adopter une approche agressive. J'ouvre une position LONG avec un levier \u00e9lev\u00e9 pour maximiser le potentiel de gain et atteindre rapidement notre objectif de ROI.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 14:05:18",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 89.86,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel est de 0.00%, ce qui est bien en dessous de notre objectif de ROI de 47.0%. Selon notre strat\u00e9gie, lorsque le PNL est inf\u00e9rieur \u00e0 l'objectif, nous devons adopter une approche agressive. J'initie une position LONG avec un levier \u00e9lev\u00e9 pour capturer une hausse potentielle et atteindre rapidement notre cible.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 14:05:24",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2140.02,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel est de 0.00%, ce qui est nettement en-dessous de l'objectif de 47.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie, une phase d'agression est n\u00e9cessaire, requ\u00e9rant un levier \u00e9lev\u00e9 (15-20x) pour viser le ROI cible. Je prends une position LONG pour anticiper une hausse du prix, avec un TP et un SL d\u00e9finis selon les consignes.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 14:05:31",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 70233.9,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel (0.00%) est tr\u00e8s en dessous de notre objectif de ROI (47.0%). Nous sommes donc en mode 'Agression' pour chercher \u00e0 atteindre notre cible. Je vais ouvrir une position LONG, car c'est une approche agressive pour une hausse potentielle. Le levier est choisi dans la fourchette haute (15-20x) et les niveaux de TP/SL sont d\u00e9finis selon les consignes, avec un TP sup\u00e9rieur au prix actuel et un SL inf\u00e9rieur.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
