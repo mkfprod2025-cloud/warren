@@ -666,5 +666,23 @@
         "levier": 18,
         "raisonnement": "Le PNL actuel est de -8.32%, ce qui est significativement inf\u00e9rieur \u00e0 notre objectif de ROI de 47.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie d'agression requise lorsque le PNL est en dessous de l'objectif, je prends une position LONG avec un levier \u00e9lev\u00e9 pour maximiser les chances de g\u00e9n\u00e9rer des profits et de se rapprocher de l'objectif de retour sur investissement.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 15:19:55",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2137.27,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel de -8.32% est bien en dessous de notre objectif de 47.0%. Conform\u00e9ment \u00e0 notre strat\u00e9gie d'agression lorsque le PNL est inf\u00e9rieur \u00e0 l'objectif, je vais ouvrir une position LONG avec un levier \u00e9lev\u00e9 pour tenter de combler rapidement le d\u00e9ficit. J'anticipe un rebond du march\u00e9.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 15:20:01",
+        "asset": "BTC/USDT",
+        "action": "HOLD",
+        "price": 69918.8,
+        "levier": 1,
+        "raisonnement": "Saturation IA.",
+        "model_used": "N/A"
     }
 ]
