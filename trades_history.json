@@ -557,5 +557,32 @@
         "levier": 18,
         "raisonnement": "Mon PNL actuel est de 0.00%, ce qui est inf\u00e9rieur \u00e0 mon objectif de ROI de 47.0%. Conform\u00e9ment \u00e0 ma strat\u00e9gie, je dois adopter une approche agressive. J'ouvre une position LONG sur ETH/USDT avec un levier \u00e9lev\u00e9 pour maximiser le potentiel de profit et atteindre l'objectif de ROI. Les niveaux de TP et SL sont d\u00e9finis selon les consignes pour une position LONG.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 11:31:50",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2160.95,
+        "levier": 18,
+        "raisonnement": "Mon PNL actuel est de 0.00%, ce qui est inf\u00e9rieur \u00e0 l'objectif de 47.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie, une approche agressive est requise. J'initie une position LONG avec un levier \u00e9lev\u00e9 pour maximiser le potentiel de profit si le prix de l'ETH augmente.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 11:31:56",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 71039.9,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel (0.00%) est bien inf\u00e9rieur \u00e0 notre objectif de ROI (47.0%). Conform\u00e9ment \u00e0 notre strat\u00e9gie, j'adopte une approche agressive, en prenant une position LONG avec un levier \u00e9lev\u00e9 pour maximiser le potentiel de gain sur une anticipation de hausse du BTC.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 11:32:03",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 91.44,
+        "levier": 18,
+        "raisonnement": "Mon PNL actuel (0.00%) est tr\u00e8s inf\u00e9rieur \u00e0 mon objectif de ROI (47.0%). Selon ma strat\u00e9gie, je dois adopter une approche agressive pour atteindre cet objectif. Cela implique l'utilisation d'un levier \u00e9lev\u00e9 (15-20x). Je vais ouvrir une position LONG, anticipant une hausse du prix de SOL/USDT, avec un TP et SL en accord avec la consigne.",
+        "model_used": "gemini-2.5-flash"
     }
 ]

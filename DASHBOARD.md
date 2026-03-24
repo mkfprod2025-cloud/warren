@@ -1,12 +1,12 @@
 # 📈 WARREN AI STATUS (v3.5)
 **État :** OPÉRATIONNEL | **PNL :** 0.00%
 
-### 🧠 Analyse (ETH/USDT)
-> Mon PNL actuel est de 0.00%, ce qui est inférieur à mon objectif de ROI de 47.0%. Conformément à ma stratégie, je dois adopter une approche agressive. J'ouvre une position LONG sur ETH/USDT avec un levier élevé pour maximiser le potentiel de profit et atteindre l'objectif de ROI. Les niveaux de TP et SL sont définis selon les consignes pour une position LONG.
+### 🧠 Analyse (SOL/USDT)
+> Mon PNL actuel (0.00%) est très inférieur à mon objectif de ROI (47.0%). Selon ma stratégie, je dois adopter une approche agressive pour atteindre cet objectif. Cela implique l'utilisation d'un levier élevé (15-20x). Je vais ouvrir une position LONG, anticipant une hausse du prix de SOL/USDT, avec un TP et SL en accord avec la consigne.
 
 ### 📍 Positions Actives
 | Actif | Action | Entrée | SL | TP | Cap |
 |---|---|---|---|---|---|
-| SOL/USDT | LONG | 92.11 | 90.5 | 94.8 | 75% |
-| ETH/USDT | LONG | 2157.94 | 2125.0 | 2235.0 | 25% |
-| BTC/USDT | LONG | 71171.9 | 69000.0 | 75000.0 | 50% |
+| SOL/USDT | LONG | 91.77 | 90.4 | 94.95 | 8% |
+| ETH/USDT | LONG | 2156.7 | 2110.0 | 2245.0 | 75% |
+| BTC/USDT | LONG | 71080.2 | 70724.79 | 71435.61 | 50% |
