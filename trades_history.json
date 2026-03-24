@@ -638,5 +638,33 @@
         "levier": 18,
         "raisonnement": "Le PNL actuel (0.00%) est tr\u00e8s en dessous de notre objectif de ROI (47.0%). Nous sommes donc en mode 'Agression' pour chercher \u00e0 atteindre notre cible. Je vais ouvrir une position LONG, car c'est une approche agressive pour une hausse potentielle. Le levier est choisi dans la fourchette haute (15-20x) et les niveaux de TP/SL sont d\u00e9finis selon les consignes, avec un TP sup\u00e9rieur au prix actuel et un SL inf\u00e9rieur.",
         "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 14:17:22",
+        "asset": "ETH/USDT",
+        "action": "LONG",
+        "price": 2127.63,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel (0.00%) est bien inf\u00e9rieur \u00e0 notre objectif de ROI (47.0%). Conform\u00e9ment \u00e0 la strat\u00e9gie, nous devons adopter une approche 'Agression' avec un levier \u00e9lev\u00e9 (15-20x). J'initie une position LONG car le march\u00e9 pr\u00e9sente une opportunit\u00e9 de hausse potentielle, visant un TP qui nous permettrait d'atteindre notre objectif de 47% de ROI avec le levier choisi, tout en s\u00e9curisant la position avec un SL strict sous le prix actuel. J'utiliserai une portion significative du capital pour maximiser le gain sur cette opportunit\u00e9 agressive.",
+        "model_used": "gemini-2.5-flash"
+    },
+    {
+        "timestamp": "2026-03-24 14:17:25",
+        "asset": "BTC/USDT",
+        "action": "CLOSE",
+        "price": 69913.9,
+        "levier": 1,
+        "raisonnement": "AUTO-CLOSE: Stop Loss atteint (69913.9 <= 69950.0)",
+        "model_used": "N/A",
+        "pnl_net_pct": -8.321167812124916
+    },
+    {
+        "timestamp": "2026-03-24 14:17:34",
+        "asset": "SOL/USDT",
+        "action": "LONG",
+        "price": 89.37,
+        "levier": 18,
+        "raisonnement": "Le PNL actuel est de -8.32%, ce qui est significativement inf\u00e9rieur \u00e0 notre objectif de ROI de 47.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie d'agression requise lorsque le PNL est en dessous de l'objectif, je prends une position LONG avec un levier \u00e9lev\u00e9 pour maximiser les chances de g\u00e9n\u00e9rer des profits et de se rapprocher de l'objectif de retour sur investissement.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
