@@ -2,8 +2,8 @@
     "bot_running": true,
     "demo_mode": true,
     "asset": "BTC/USDT",
-    "target_yield": 47.0,
-    "deadline": "2026-03-25",
+    "target_yield": 25.0,
+    "deadline": "2026-03-26",
     "macro_info": "Test de simulation Warren Profond - Objectif agressif",
     "pnl_reset_date": "2026-03-24 10:45:00"
 }
