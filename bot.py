@@ -51,13 +51,16 @@ def load_json(file_path, default):
     return default
 
 def get_wallet_balance():
-    """Récupère le solde USDT réel sur BitMart (v3.5.3)"""
+    """Récupère le solde USDT réel sur BitMart (v3.5.4)"""
     try:
         contract_api = APIContract(BITMART_API_KEY, BITMART_SECRET, BITMART_MEMO)
-        res = contract_api.get_account_balance("USDT")
-        if res and 'data' in res[0] and 'available_balance' in res[0]['data']:
-            return float(res[0]['data']['available_balance'])
-    except: pass
+        res = contract_api.get_assets_detail()
+        if res and 'data' in res[0]:
+            for asset in res[0]['data']:
+                if asset.get('currency') == "USDT":
+                    return float(asset.get('available_balance', 0.0))
+    except Exception as e:
+        print(f"Erreur balance: {e}")
     return 0.0
 
 def check_auto_close(asset, positions, market_data):
@@ -82,9 +85,10 @@ def check_auto_close(asset, positions, market_data):
     return None
 
 def generate_dashboards(config, trades, positions, last_decision):
-    """Génère le Dashboard HTML5 Pro-View (v3.5.3)"""
+    """Génère le Dashboard HTML5 Pro-View (v3.5.4)"""
     status_class = "status-active" if config.get("bot_running") else "status-stopped"
     status_text = "OPÉRATIONNEL" if config.get("bot_running") else "EN PAUSE"
+    mode_text = "DÉMO" if config.get("demo_mode") else "RÉEL"
     
     # Reset PNL Logic
     reset_date = config.get("pnl_reset_date", "2000-01-01 00:00:00")
@@ -117,6 +121,7 @@ def generate_dashboards(config, trades, positions, last_decision):
             .status-badge {{ padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 12px; }}
             .status-active {{ background: rgba(63, 185, 80, 0.15); color: var(--green); border: 1px solid var(--green); }}
             .status-stopped {{ background: rgba(248, 81, 73, 0.15); color: var(--red); border: 1px solid var(--red); }}
+            .mode-badge {{ margin-left: 10px; font-size: 10px; background: #30363d; padding: 2px 8px; border-radius: 4px; }}
             .grid {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 20px; }}
             .card {{ background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 15px; }}
             .card h3 {{ margin: 0; font-size: 11px; color: #768390; text-transform: uppercase; letter-spacing: 1px; }}
@@ -146,7 +151,7 @@ def generate_dashboards(config, trades, positions, last_decision):
     <body>
         <div class="container">
             <div class="header">
-                <h1>📈 WARREN AI <small style="font-size: 12px; color: #768390; font-weight: normal;">PRO TERMINAL v3.5</small></h1>
+                <h1>📈 WARREN AI <small style="font-size: 12px; color: #768390; font-weight: normal;">PRO TERMINAL v3.5.4</small> <span class="mode-badge">{mode_text}</span></h1>
                 <span class="status-badge {status_class}">{status_text}</span>
             </div>
             <div class="grid">
@@ -235,7 +240,7 @@ def generate_dashboards(config, trades, positions, last_decision):
     with open(DASHBOARD_HTML, "w", encoding="utf-8") as f: f.write(html_content)
 
     # 2. GÉNÉRATION MARKDOWN
-    md_content = f"""# 📈 WARREN AI STATUS (v3.5)\n**État :** {status_text} | **PNL :** {total_pnl:.2f}%\n\n### 🧠 Analyse ({last_decision.get('asset', 'N/A')})\n> {last_decision.get('raisonnement', 'N/A')}\n\n### 📍 Positions Actives\n| Actif | Action | Entrée | SL | TP | Cap |\n|---|---|---|---|---|---|\n"""
+    md_content = f"""# 📈 WARREN AI STATUS (v3.5.4)\n**État :** {status_text} | **Mode :** {mode_text} | **PNL :** {total_pnl:.2f}%\n\n### 🧠 Analyse ({last_decision.get('asset', 'N/A')})\n> {last_decision.get('raisonnement', 'N/A')}\n\n### 📍 Positions Actives\n| Actif | Action | Entrée | SL | TP | Cap |\n|---|---|---|---|---|---|\n"""
     for asset, data in positions.items():
         md_content += f"| {asset} | {data.get('action','-')} | {data.get('entry_price','-')} | {data.get('sl','-')} | {data.get('tp','-')} | {data.get('capital_pct','-')}% |\n"
     with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(md_content)
@@ -277,13 +282,44 @@ def ask_gemini_pro(asset, config, market_data):
         except Exception: continue
     return {"action": "HOLD", "raisonnement": "Saturation IA.", "asset": asset}
 
-def execute(asset, decision, market_data):
+def execute(asset, decision, market_data, demo_mode=True):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     positions = load_json(POSITIONS_FILE, {})
     trades = load_json(TRADES_FILE, [])
     action = decision['action']
     price = market_data['price']
-    trade_info = { "timestamp": timestamp, "asset": asset, "action": action, "price": price, "levier": decision.get('levier', 1), "raisonnement": decision.get('raisonnement','N/A'), "model_used": decision.get('model_used', 'N/A') }
+    
+    trade_info = { 
+        "timestamp": timestamp, "asset": asset, "action": action, "price": price, 
+        "levier": decision.get('levier', 1), "raisonnement": decision.get('raisonnement','N/A'), 
+        "model_used": decision.get('model_used', 'N/A'), "mode": "DEMO" if demo_mode else "RÉEL"
+    }
+
+    if not demo_mode and action != "HOLD":
+        try:
+            contract_api = APIContract(BITMART_API_KEY, BITMART_SECRET, BITMART_MEMO)
+            symbol = asset.replace("/", "")
+            
+            # 1. Configurer le Levier et Mode Isolated
+            contract_api.post_submit_leverage(symbol, leverage=str(decision.get('levier', 1)), open_type="isolated")
+            
+            # 2. Calculer la taille (Size) - Simulation simplifiée pour v3.5.4
+            # Sur BitMart, size est souvent en contrats. Ici on utilise une estimation basée sur le capital USDT.
+            balance = get_wallet_balance()
+            capital_usdt = balance * (decision.get('pourcentage_capital', 10) / 100)
+            size = int((capital_usdt * decision.get('levier', 1)) / price)
+            
+            if size > 0:
+                side = 1 if action == "LONG" else (2 if action == "SHORT" else (3 if action == "CLOSE" and positions.get(asset, {}).get('action') == "LONG" else 4))
+                # side: 1:buy_open_long, 2:sell_open_short, 3:sell_close_long, 4:buy_close_short
+                
+                res = contract_api.post_submit_order(symbol, side=side, type="market", size=size)
+                trade_info["bitmart_order_id"] = res[0].get('data', {}).get('order_id', 'ERROR')
+                print(f"Ordre Réel Envoyé: {action} {asset} size={size}")
+        except Exception as e:
+            trade_info["error"] = str(e)
+            print(f"Erreur Trading Réel: {e}")
+
     if action in ["LONG", "SHORT"]:
         positions[asset] = { "entry_price": price, "action": action, "levier": decision.get('levier', 1), "sl": decision.get('sl'), "tp": decision.get('tp'), "capital_pct": decision.get('pourcentage_capital', 10), "timestamp": timestamp }
     elif action == "CLOSE" and asset in positions:
@@ -291,22 +327,14 @@ def execute(asset, decision, market_data):
         pnl = (price - pos['entry_price'])/pos['entry_price'] if pos['action']=="LONG" else (pos['entry_price'] - price)/pos['entry_price']
         trade_info["pnl_net_pct"] = (pnl * pos.get('levier', 1) - (2 * FEE_RATE)) * 100
         del positions[asset]
+        
     trades.append(trade_info)
     with open(POSITIONS_FILE, "w") as f: json.dump(positions, f, indent=4)
     with open(TRADES_FILE, "w") as f: json.dump(trades, f, indent=4)
     return trade_info
 
 def run_cycle():
-    # 1. Chargement config "Avant"
     config = get_config()
-    old_target = config.get("target_yield")
-    old_deadline = config.get("deadline")
-    old_asset = config.get("asset")
-
-    # Si le bot vient d'être mis à jour par le dashboard, les fichiers locaux ont changé
-    # On vérifie si un changement d'objectif a eu lieu au cycle précédent ou actuel
-    # Pour Warren v3.5.3, le reset se fait si les valeurs ne correspondent pas
-    
     trades = load_json(TRADES_FILE, [])
     positions = load_json(POSITIONS_FILE, {})
     
@@ -324,7 +352,7 @@ def run_cycle():
                 decision = ask_gemini_pro(asset, config, data)
             
             if decision['action'] != "HOLD" or asset == config["asset"]:
-                execute(asset, decision, data)
+                execute(asset, decision, data, demo_mode=config.get("demo_mode", True))
                 last_decision = decision
         time.sleep(2)
     generate_dashboards(config, trades, positions, last_decision)
@@ -346,4 +374,4 @@ if __name__ == "__main__":
     try: run_cycle()
     except Exception as e:
         import traceback
-        with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(f"# 🚨 ERREUR CRITIQUE v3.5.3\n```python\n{traceback.format_exc()}\n```")
+        with open(DASHBOARD_MD, "w", encoding="utf-8") as f: f.write(f"# 🚨 ERREUR CRITIQUE v3.5.4\n```python\n{traceback.format_exc()}\n```")

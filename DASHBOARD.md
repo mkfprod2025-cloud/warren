@@ -1,11 +1,9 @@
-# 📈 WARREN AI STATUS (v3.5)
-**État :** OPÉRATIONNEL | **PNL :** -8.32%
+# 📈 WARREN AI STATUS (v3.5.4)
+**État :** OPÉRATIONNEL | **Mode :** DÉMO | **PNL :** 0.00%
 
-### 🧠 Analyse (BTC/USDT)
-> Mon PNL actuel de -8.32% est bien inférieur à mon objectif de ROI de 25.0%. Conformément à ma stratégie, je dois adopter une approche agressive pour tenter de récupérer rapidement. Je prends donc une position LONG avec un levier élevé. Les niveaux de TP et SL sont définis pour gérer le risque tout en visant une reprise significative au-dessus du prix actuel.
+### 🧠 Analyse (N/A)
+> En attente de lancement RÉEL...
 
 ### 📍 Positions Actives
 | Actif | Action | Entrée | SL | TP | Cap |
 |---|---|---|---|---|---|
-| SOL/USDT | LONG | 89.37 | 88.0 | 92.5 | 60% |
-| ETH/USDT | LONG | 2137.27 | 2080.0 | 2250.0 | 15% |
