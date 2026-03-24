@@ -684,5 +684,14 @@
         "levier": 1,
         "raisonnement": "Saturation IA.",
         "model_used": "N/A"
+    },
+    {
+        "timestamp": "2026-03-24 15:33:16",
+        "asset": "BTC/USDT",
+        "action": "LONG",
+        "price": 69769.4,
+        "levier": 18,
+        "raisonnement": "Mon PNL actuel de -8.32% est bien inf\u00e9rieur \u00e0 mon objectif de ROI de 25.0%. Conform\u00e9ment \u00e0 ma strat\u00e9gie, je dois adopter une approche agressive pour tenter de r\u00e9cup\u00e9rer rapidement. Je prends donc une position LONG avec un levier \u00e9lev\u00e9. Les niveaux de TP et SL sont d\u00e9finis pour g\u00e9rer le risque tout en visant une reprise significative au-dessus du prix actuel.",
+        "model_used": "gemini-2.5-flash"
     }
 ]
