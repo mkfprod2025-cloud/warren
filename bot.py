@@ -31,7 +31,7 @@ def get_signature(secret_key, params_str):
 
 def send_bingx_request(method, path, params={}):
     if not BINGX_API_KEY or not BINGX_SECRET_KEY:
-        return {"code": -1, "msg": "API Keys missing"}
+        return {"code": -1, "msg": "Clés API manquantes"}
         
     params["timestamp"] = int(time.time() * 1000)
     sorted_params = sorted(params.items())
@@ -41,7 +41,6 @@ def send_bingx_request(method, path, params={}):
     headers = {"X-BX-APIKEY": BINGX_API_KEY}
     
     try:
-        # Utilisation du proxy si défini (Cloud)
         proxies = {"http": PROXY_URL, "https": PROXY_URL} if PROXY_URL else None
         response = requests.request(method, url, headers=headers, proxies=proxies, timeout=15)
         return response.json()
@@ -54,13 +53,19 @@ def get_market_info(symbol):
         return float(res["data"]["price"])
     return None
 
-def get_balance():
+def get_balance_info():
+    """Récupère solde et equity avec diagnostic"""
     res = send_bingx_request("GET", "/openApi/swap/v2/user/balance")
     if res.get("code") == 0:
         data = res.get("data", {})
         if "balance" in data and isinstance(data["balance"], dict):
-            return float(data["balance"].get("balance", 0.0))
-    return 0.0
+            b = data["balance"]
+            return {
+                "balance": float(b.get("balance", 0.0)),
+                "equity": float(b.get("equity", 0.0)),
+                "status": "OK"
+            }
+    return {"balance": 0.0, "equity": 0.0, "status": f"ERREUR ({res.get('msg', 'Connexion échouée')})"}
 
 def get_active_positions():
     res = send_bingx_request("GET", "/openApi/swap/v2/user/positions")
@@ -88,8 +93,7 @@ def get_ai_decision(symbol, price, balance):
     except:
         return "WAIT", "Erreur IA"
 
-def update_dashboard(balance, brain_msg, positions, config):
-    # Génération du HTML des positions
+def update_dashboard(balance, brain_msg, positions, config, wallet_status="OK"):
     pos_html = ""
     if not positions:
         pos_html = "<tr><td colspan='7' style='text-align:center; padding: 30px; color:#768390;'>Aucune position ouverte.</td></tr>"
@@ -97,7 +101,6 @@ def update_dashboard(balance, brain_msg, positions, config):
         side_class = "tag-long" if p['side'] == "LONG" else "tag-short"
         pos_html += f"<tr><td>{p['symbol']}</td><td><span class='tag {side_class}'>{p['side']}</span></td><td>{p['entry']}</td><td>x{p['leverage']}</td><td>-</td><td>-</td><td>{p['margin']:.2f} USDT</td></tr>"
 
-    # Journal (lecture file)
     history_html = ""
     try:
         with open(TRADES_FILE, "r") as f:
@@ -108,6 +111,8 @@ def update_dashboard(balance, brain_msg, positions, config):
 
     status_class = "status-active" if config.get("bot_running") else "status-stopped"
     status_text = "EN SERVICE" if config.get("bot_running") else "EN PAUSE"
+    
+    balance_display = f"{balance:.2f} USDT" if wallet_status == "OK" else f"<span style='color:var(--red)'>{wallet_status}</span>"
 
     template = f"""
     <!DOCTYPE html>
@@ -157,7 +162,7 @@ def update_dashboard(balance, brain_msg, positions, config):
             </div>
             <div class="grid">
                 <div class="card"><h3>Actifs Scan</h3><p>{len(ASSETS)} unités</p></div>
-                <div class="card"><h3>Solde USDT</h3><p style="color: var(--green)">{balance:.2f}</p></div>
+                <div class="card"><h3>Solde USDT</h3><p style="color: var(--green)">{balance_display}</p></div>
                 <div class="card"><h3>Objectif</h3><p>{config.get('target_yield', 15.0)}%</p></div>
                 <div class="card"><h3>Deadline</h3><p style="font-size: 16px;">{config.get('deadline', '-')}</p></div>
             </div>
@@ -231,7 +236,8 @@ def run_cycle():
         with open(CONFIG_FILE, "r") as f: config = json.load(f)
     except: config = {}
 
-    balance = get_balance()
+    wallet = get_balance_info()
+    balance = wallet["equity"]
     positions = get_active_positions()
     
     all_decisions = []
@@ -240,13 +246,15 @@ def run_cycle():
             price = get_market_info(asset)
             if price:
                 decision, reason = get_ai_decision(asset, price, balance)
-                all_decisions.append(f"[{asset}] {decision}: {reason}")
+                all_decisions.append(f"[{asset}] {decision}")
+            else:
+                all_decisions.append(f"[{asset}] Erreur Prix")
     else:
         all_decisions.append("Bot en pause.")
 
     brain_msg = " | ".join(all_decisions)
-    update_dashboard(balance, brain_msg, positions, config)
-    print("Cycle terminé, dashboard mis à jour.")
+    update_dashboard(balance, brain_msg, positions, config, wallet_status=wallet["status"])
+    print(f"Cycle terminé, Statut Wallet: {wallet['status']}")
 
 if __name__ == "__main__":
     run_cycle()

@@ -1,9 +1,9 @@
 {
-    "bot_running": false,
+    "bot_running": true,
     "demo_mode": false,
     "asset": "BTC-USDT",
     "target_yield": 15.0,
-    "deadline": "2026-04-30",
-    "macro_info": "Initialisation Migration BingX v4.0",
-    "pnl_reset_date": "2026-03-25 00:00:00"
+    "deadline": "2026-03-31",
+    "macro_info": "Warren v4.0.4: Connexion BingX Réelle active",
+    "pnl_reset_date": "2026-03-25 17:45:00"
 }
