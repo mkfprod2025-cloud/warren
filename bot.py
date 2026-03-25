@@ -255,9 +255,21 @@ def execute(asset, decision, market_data, demo_mode=False):
             size = int((capital_usdt * int(levier)) / price)
             
             if size > 0:
-                side = 1 if action == "LONG" else (2 if action == "SHORT" else (3 if action == "CLOSE" and positions.get(asset,{}).get('action')=="LONG" else 4))
-                res = contract_api.post_submit_order(symbol, side=side, type="market", size=size)
-                trade_info["bitmart_order_id"] = str(res[0].get('data', {}).get('order_id', 'ERR'))
+                # BitMart USD-M Side Mapping:
+                # 1: buy_open_long
+                # 2: sell_close_long
+                # 3: sell_open_short
+                # 4: buy_close_short
+                
+                side = 0
+                if action == "LONG": side = 1
+                elif action == "SHORT": side = 3
+                elif action == "CLOSE" and asset in positions:
+                    side = 2 if positions[asset]['action'] == "LONG" else 4
+                
+                if side > 0:
+                    res = contract_api.post_submit_order(symbol, side=side, type="market", size=size)
+                    trade_info["bitmart_order_id"] = str(res[0].get('data', {}).get('order_id', 'ERR'))
         except Exception as e:
             trade_info["error"] = str(e)
 
