@@ -1,9 +1,9 @@
 {
-    "bot_running": true,
+    "bot_running": false,
     "demo_mode": false,
     "asset": "BTC/USDT",
     "target_yield": 15.0,
     "deadline": "2026-04-01",
-    "macro_info": "Passage en mode RÉEL USD-M. Prudence sur le levier.",
+    "macro_info": "RÉEL USD-M - v3.5.5.2",
     "pnl_reset_date": "2026-03-25 00:00:00"
 }
