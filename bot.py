@@ -24,6 +24,7 @@ CONFIG_FILE = "config.json"
 TRADES_FILE = "trades_history.json"
 POSITIONS_FILE = "positions.json"
 DASHBOARD_HTML = "index.html"
+DEBUG_FILE = "debug_api.json"
 ASSETS = ["BTC-USDT", "ETH-USDT", "SOL-USDT"]
 
 def get_signature(secret_key, params_str):
@@ -31,7 +32,7 @@ def get_signature(secret_key, params_str):
 
 def send_bingx_request(method, path, params={}):
     if not BINGX_API_KEY or not BINGX_SECRET_KEY:
-        return {"code": -1, "msg": "Clés API manquantes"}
+        return {"code": -1, "msg": "ENV_MISSING"}
         
     params["timestamp"] = int(time.time() * 1000)
     sorted_params = sorted(params.items())
@@ -43,7 +44,19 @@ def send_bingx_request(method, path, params={}):
     try:
         proxies = {"http": PROXY_URL, "https": PROXY_URL} if PROXY_URL else None
         response = requests.request(method, url, headers=headers, proxies=proxies, timeout=15)
-        return response.json()
+        res_json = response.json()
+        
+        # Log de debug (sans les clés)
+        with open(DEBUG_FILE, "w") as f:
+            json.dump({
+                "path": path,
+                "code": res_json.get("code"),
+                "msg": res_json.get("msg"),
+                "timestamp": datetime.now().isoformat(),
+                "has_proxy": bool(PROXY_URL)
+            }, f)
+            
+        return res_json
     except Exception as e:
         return {"code": -1, "msg": str(e)}
 
@@ -54,18 +67,17 @@ def get_market_info(symbol):
     return None
 
 def get_balance_info():
-    """Récupère solde et equity avec diagnostic"""
     res = send_bingx_request("GET", "/openApi/swap/v2/user/balance")
     if res.get("code") == 0:
         data = res.get("data", {})
         if "balance" in data and isinstance(data["balance"], dict):
             b = data["balance"]
-            return {
-                "balance": float(b.get("balance", 0.0)),
-                "equity": float(b.get("equity", 0.0)),
-                "status": "OK"
-            }
-    return {"balance": 0.0, "equity": 0.0, "status": f"ERREUR ({res.get('msg', 'Connexion échouée')})"}
+            return {"balance": float(b.get("balance", 0.0)), "equity": float(b.get("equity", 0.0)), "status": "OK"}
+    
+    error_msg = res.get("msg", "ERREUR")
+    if error_msg == "ENV_MISSING":
+        return {"balance": 0.0, "equity": 0.0, "status": "Clés Cloud Manquantes"}
+    return {"balance": 0.0, "equity": 0.0, "status": f"BINGX: {error_msg}"}
 
 def get_active_positions():
     res = send_bingx_request("GET", "/openApi/swap/v2/user/positions")
@@ -78,14 +90,13 @@ def get_active_positions():
                     "side": "LONG" if float(p["positionAmt"]) > 0 else "SHORT",
                     "entry": float(p["avgPrice"]),
                     "leverage": p["leverage"],
-                    "unrealizedPnl": float(p["unrealizedProfit"]),
                     "margin": float(p["isolatedMargin"])
                 })
     return positions
 
 def get_ai_decision(symbol, price, balance):
     if not client_ia: return "WAIT", "IA non configurée"
-    prompt = f"Analyse {symbol} à {price} USDT. Solde: {balance} USDT. Réponds en JSON: {{'decision': 'BUY|SELL|WAIT', 'reason': '...', 'leverage': 5}}"
+    prompt = f"Analyse {symbol} à {price}. Solde: {balance}. Réponds JSON: {{'decision': 'BUY|SELL|WAIT', 'reason': '...'}}"
     try:
         response = client_ia.models.generate_content(model="gemini-2.0-flash", contents=prompt)
         data = json.loads(response.text.replace("```json", "").replace("```", "").strip())
@@ -112,7 +123,7 @@ def update_dashboard(balance, brain_msg, positions, config, wallet_status="OK"):
     status_class = "status-active" if config.get("bot_running") else "status-stopped"
     status_text = "EN SERVICE" if config.get("bot_running") else "EN PAUSE"
     
-    balance_display = f"{balance:.2f} USDT" if wallet_status == "OK" else f"<span style='color:var(--red)'>{wallet_status}</span>"
+    balance_display = f"{balance:.2f} USDT" if wallet_status == "OK" else f"<span style='color:var(--red); font-size:12px;'>{wallet_status}</span>"
 
     template = f"""
     <!DOCTYPE html>
@@ -141,11 +152,8 @@ def update_dashboard(balance, brain_msg, positions, config, wallet_status="OK"):
             td {{ padding: 10px; border-bottom: 1px solid var(--border); }}
             .history-scroll {{ max-height: 400px; overflow-y: auto; }}
             .console {{ background: #0d1117; border: 1px solid var(--accent); border-radius: 8px; padding: 15px; position: sticky; top: 15px; }}
-            .form-group {{ margin-bottom: 12px; }}
-            label {{ display: block; font-size: 11px; color: #768390; margin-bottom: 5px; }}
-            input, select, textarea {{ width: 100%; background: #1c2128; border: 1px solid var(--border); color: white; padding: 10px; border-radius: 6px; box-sizing: border-box; }}
             .btn-group {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }}
-            button {{ padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }}
+            button {{ padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }}
             .btn-start {{ background: var(--green); color: white; }}
             .btn-stop {{ background: var(--red); color: white; }}
             .btn-update {{ background: var(--accent); color: white; grid-column: span 2; }}
@@ -164,7 +172,7 @@ def update_dashboard(balance, brain_msg, positions, config, wallet_status="OK"):
                 <div class="card"><h3>Actifs Scan</h3><p>{len(ASSETS)} unités</p></div>
                 <div class="card"><h3>Solde USDT</h3><p style="color: var(--green)">{balance_display}</p></div>
                 <div class="card"><h3>Objectif</h3><p>{config.get('target_yield', 15.0)}%</p></div>
-                <div class="card"><h3>Deadline</h3><p style="font-size: 16px;">{config.get('deadline', '-')}</p></div>
+                <div class="card"><h3>Deadline</h3><p>{config.get('deadline', '-')}</p></div>
             </div>
             <div class="brain">
                 <strong style="color:var(--accent); font-style: normal;">🧠 Dernière Analyse :</strong> "{brain_msg}"
@@ -178,52 +186,18 @@ def update_dashboard(balance, brain_msg, positions, config, wallet_status="OK"):
                             <tbody>{pos_html}</tbody>
                         </table>
                     </div>
-                    <div class="table-container">
-                        <h2>📜 Journal des Trades</h2>
-                        <div class="history-scroll">
-                            <table>
-                                <thead><tr><th>Date</th><th>Actif</th><th>Ordre</th><th>Prix</th><th>PNL %</th></tr></thead>
-                                <tbody>{history_html}</tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
                 <div class="right-col">
                     <div class="console">
                         <h2>🎮 Warren Remote</h2>
-                        <div class="form-group"><label>Instruction Macro</label><textarea id="macro" rows="3">{config.get('macro_info', '')}</textarea></div>
-                        <div class="form-group"><label>Focus Actif</label><input type="text" id="asset" value="{config.get('asset', 'BTC-USDT')}"></div>
-                        <div class="form-group"><label>Objectif ROI %</label><input type="number" id="yield" value="{config.get('target_yield', 15.0)}"></div>
-                        <div class="form-group"><label>Date Limite</label><input type="date" id="deadline" value="{config.get('deadline', '2026-03-31')}"></div>
                         <div class="btn-group">
-                            <button class="btn-start" onclick="sendCommand('START')">DÉMARRER</button>
-                            <button class="btn-stop" onclick="sendCommand('STOP')">ARRÊTER</button>
-                            <button class="btn-update" onclick="sendCommand('UPDATE_CONFIG')">MAJ CONFIG</button>
+                            <button class="btn-start" onclick="alert('Lancer sur GitHub Actions')">DÉMARRER</button>
+                            <button class="btn-stop" onclick="alert('Arrêter sur GitHub Actions')">ARRÊTER</button>
                         </div>
-                        <p id="log" style="font-size: 11px; margin-top: 15px; color: #768390; text-align: center;"></p>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            async function sendCommand(cmd) {{
-                const token = localStorage.getItem('GITHUB_TOKEN') || prompt('GITHUB_TOKEN :');
-                if (!token) return;
-                localStorage.setItem('GITHUB_TOKEN', token);
-                const log = document.getElementById('log');
-                log.innerText = "⏳ Envoi...";
-                const payload = {{ ref: 'main', inputs: {{ command: cmd, asset: document.getElementById('asset').value, target_yield: document.getElementById('yield').value, macro_info: document.getElementById('macro').value, deadline: document.getElementById('deadline').value }} }};
-                try {{
-                    const res = await fetch('https://api.github.com/repos/mkfprod2025-cloud/warren/actions/workflows/bot.yml/dispatches', {{
-                        method: 'POST',
-                        headers: {{ 'Authorization': `token ${{token}}`, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' }},
-                        body: JSON.stringify(payload)
-                    }});
-                    if (res.ok) {{ log.innerText = "✅ Succès !"; log.style.color = "var(--green)"; }}
-                    else {{ log.innerText = "❌ Erreur"; log.style.color = "var(--red)"; }}
-                }} catch (e) {{ log.innerText = "❌ Erreur connexion"; }}
-            }}
-        </script>
     </body>
     </html>
     """
@@ -247,14 +221,12 @@ def run_cycle():
             if price:
                 decision, reason = get_ai_decision(asset, price, balance)
                 all_decisions.append(f"[{asset}] {decision}")
-            else:
-                all_decisions.append(f"[{asset}] Erreur Prix")
     else:
         all_decisions.append("Bot en pause.")
 
     brain_msg = " | ".join(all_decisions)
     update_dashboard(balance, brain_msg, positions, config, wallet_status=wallet["status"])
-    print(f"Cycle terminé, Statut Wallet: {wallet['status']}")
+    print(f"Cycle terminé, Statut: {wallet['status']}")
 
 if __name__ == "__main__":
     run_cycle()

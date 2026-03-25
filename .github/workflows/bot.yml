@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -46,6 +48,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add trades_history.json positions.json config.json index.html
-          git commit -m "Warren v4.0: Cycle BingX Sync terminé" || echo "No changes"
+          git add trades_history.json positions.json config.json index.html debug_api.json
+          git commit -m "Warren v4.0: Cycle Sync + Debug" || echo "No changes"
           git push origin main --force
