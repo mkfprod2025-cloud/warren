@@ -28,5 +28,32 @@
         "raisonnement": "Le PNL actuel est de 0.00%, ce qui est inf\u00e9rieur \u00e0 l'objectif de 25.0%. Conform\u00e9ment \u00e0 la strat\u00e9gie, une approche agressive est requise pour atteindre le ROI cible. J'ouvre une position LONG avec un levier \u00e9lev\u00e9 pour maximiser le potentiel de gain. Le TP est fix\u00e9 \u00e0 un niveau qui, avec ce levier, permettrait d'approcher l'objectif de ROI si le mouvement de prix est favorable. Le SL est plac\u00e9 sous le prix actuel pour limiter les pertes en cas de mouvement d\u00e9favorable du march\u00e9.",
         "model_used": "gemini-2.5-flash",
         "mode": "DEMO"
+    },
+    {
+        "timestamp": "2026-03-25 09:36:39",
+        "asset": "BTC/USDT",
+        "action": "CLOSE",
+        "price": 71224.0,
+        "mode": "R\u00c9EL",
+        "error": "APIException(http status=401): response={\"trace\":\"9320574c-1228-462e-b205-f1fd41e6c0cb\",\"msg\":\"Header X-BM-KEY not found\",\"code\":30002}\n",
+        "pnl_net_pct": 39.99229859023948
+    },
+    {
+        "timestamp": "2026-03-25 09:36:42",
+        "asset": "ETH/USDT",
+        "action": "CLOSE",
+        "price": 2181.64,
+        "mode": "R\u00c9EL",
+        "error": "APIException(http status=401): response={\"trace\":\"7d19826c-861f-46e0-8cf7-64ac5d46c6ae\",\"msg\":\"Header X-BM-KEY not found\",\"code\":30002}\n",
+        "pnl_net_pct": 44.3767379204416
+    },
+    {
+        "timestamp": "2026-03-25 09:36:44",
+        "asset": "SOL/USDT",
+        "action": "CLOSE",
+        "price": 92.4,
+        "mode": "R\u00c9EL",
+        "error": "APIException(http status=401): response={\"msg\":\"Header X-BM-KEY not found\",\"trace\":\"f70c1717-ac57-4dc2-8c8c-54b34240e168\",\"code\":30002}\n",
+        "pnl_net_pct": 58.41167951726472
     }
 ]

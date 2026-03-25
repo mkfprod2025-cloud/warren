@@ -1,12 +1,5 @@
-# 📈 WARREN AI STATUS (v3.5.4)
-**État :** EN PAUSE | **Mode :** DÉMO | **PNL :** 0.00%
+# 📈 WARREN AI STATUS (v3.5.5)
+**Mode :** RÉEL | **PNL :** 0.00% | **Solde USD-M :** 0.00 USDT
 
-### 🧠 Analyse (N/A)
-> Bot en pause.
-
-### 📍 Positions Actives
-| Actif | Action | Entrée | SL | TP | Cap |
-|---|---|---|---|---|---|
-| BTC/USDT | LONG | 69671.4 | 69323.0 | 70716.5 | 50% |
-| ETH/USDT | LONG | 2129.01 | 2115.0 | 2155.0 | 15% |
-| SOL/USDT | LONG | 89.49 | 88.5 | 90.75 | 10% |
+### 🧠 Analyse USD-M (N/A)
+> Cycle USD-M complété.
