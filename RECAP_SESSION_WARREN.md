@@ -1,25 +1,25 @@
-# 📚 RÉSUMÉ DE SESSION : PROJET WARREN (23/03/2026)
+# 📚 RÉSUMÉ DE SESSION : PROJET WARREN (25/03/2026)
 
-**Version :** Warren v3.4 Pro (Multi-Trading & Robustesse Cloud)
+**Version :** Warren v4.0.5 (MIGRATION BINGX RÉUSSIE)
 
-## 1. Avancées Techniques (v3.4)
-*   **Moteur Multi-Trading (`bot.py`)** : Warren est désormais capable de gérer plusieurs actifs simultanément. Liste par défaut : **BTC/USDT, ETH/USDT, SOL/USDT**.
-*   **Gemini 2026** : Correction des modèles IA. Utilisation prioritaire de `gemini-3.1-pro-preview` et `gemini-2.5-pro` (noms vérifiés via API).
-*   **Résolution Git Cloud** : Intégration de la stratégie `theirs` dans le workflow (`git pull --rebase --strategy-option=theirs`). Le bot écrase désormais les conflits de données sur GitHub, garantissant un fonctionnement sans interruption (Exit Code 128 résolu).
+## 1. Avancées Techniques (v4.0.x)
+*   **Pivot BingX Perpetual V2** : Abandon complet de BitMart au profit de l'API BingX.
+*   **Gemini 2.0 Flash Integration** : Utilisation du nouveau modèle Gemini pour des analyses plus rapides et précises sur 3 actifs : **BTC-USDT, ETH-USDT, SOL-USDT**.
+*   **Système de Diagnostic Deep (v4.0.5)** : Implémentation de `debug_api.json` pour isoler les problèmes de connectivité (Proxy/API) sans polluer les logs GitHub.
+*   **Smart Wallet Sync** : Détection automatique des erreurs de clés et affichage explicite sur le dashboard.
 
-## 2. Interface & Dashboard
-*   **Dashboard HTML5 v3.4** : Affichage dynamique du nombre d'actifs suivis et de l'analyse détaillée de chaque cycle.
-*   **DASHBOARD.md (Natif)** : Génération automatique d'un résumé Markdown directement visible sur la page d'accueil du repository GitHub.
-*   **Responsivité** : Le dashboard est maintenant généré systématiquement, même lorsque le bot est en pause, pour refléter l'état réel instantanément.
+## 2. Infrastructure Cloud & Remote
+*   **Workflow GitHub Actions v4.0** : Automatisation totale (toutes les 15 min). Synchronisation bidirectionnelle des fichiers JSON (positions, historique, config).
+*   **Dashboard Pro Terminal** : Restauration du design v3.5 optimisé. Intégration d'un système de commande à distance via GitHub API (Workflow Dispatch).
 
-## 3. Sécurisation & Secrets
-*   **GitHub Secrets** : Les 4 clés (`GEMINI_API_KEY`, `BITMART_API_KEY`, `BITMART_SECRET`, `BITMART_MEMO`) ont été injectées de manière sécurisée dans les paramètres du dépôt GitHub.
-*   **Protection .env** : Le fichier `.gitignore` a été vérifié pour empêcher toute fuite accidentelle des clés vers le Cloud.
+## 3. Sécurisation & Environnement
+*   **Fichier .env local** : Mis à jour avec les clés BingX réelles.
+*   **Proxy Diagnostic** : Découverte d'un blocage potentiel lié à la configuration `PROXY_URL` dans le Cloud vs Local.
 
 ## 4. État Final & Mode Opératoire
-*   **Mode** : DEMO (Argent fictif).
-*   **Statut** : **OPÉRATIONNEL** (Cycle de 15 min sur GitHub Actions).
-*   **Sauvegarde** : Une copie physique stable a été créée dans `C:\Users\amber\OneDrive\Bureau\warren_BACKUP_v3.4`.
+*   **Mode** : RÉEL (BingX).
+*   **Statut** : **ACTIF** (Bot activé dans `config.json`).
+*   **Sauvegarde** : Synchronisation GitHub effectuée (v4.0.5).
 
 ---
-**Prochaine étape :** Analyse des premières décisions multi-trading et observation du comportement de Warren sur ETH et SOL d'ici 15 minutes.
+**Note de reprise (Post-Crash) :** La session précédente a été interrompue brutalement. Cette version v4.0.5 est la base stable pour la suite.

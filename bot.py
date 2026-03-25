@@ -84,14 +84,18 @@ def get_active_positions():
     positions = []
     if res.get("code") == 0:
         for p in res.get("data", []):
-            if float(p.get("positionAmt", 0)) != 0:
-                positions.append({
-                    "symbol": p["symbol"],
-                    "side": "LONG" if float(p["positionAmt"]) > 0 else "SHORT",
-                    "entry": float(p["avgPrice"]),
-                    "leverage": p["leverage"],
-                    "margin": float(p["isolatedMargin"])
-                })
+            try:
+                amt = float(p.get("positionAmt", 0))
+                if amt != 0:
+                    positions.append({
+                        "symbol": p["symbol"],
+                        "side": p.get("positionSide", "LONG"),
+                        "entry": float(p.get("avgPrice", 0)),
+                        "leverage": p.get("leverage", "1"),
+                        "margin": float(p.get("initialMargin", 0))
+                    })
+            except Exception as e:
+                print(f"Erreur parsing position: {e}")
     return positions
 
 def get_ai_decision(symbol, price, balance):
