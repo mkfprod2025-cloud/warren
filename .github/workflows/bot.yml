@@ -14,6 +14,11 @@ on:
         type: choice
         options: [START, STOP, UPDATE_CONFIG]
 
+# Empêche plusieurs cycles de s'exécuter en même temps
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   trade:
     runs-on: ubuntu-latest
@@ -49,5 +54,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add trades_history.json positions.json config.json index.html debug_api.json
-          git commit -m "Warren v4.0: Cycle Sync + Debug" || echo "No changes"
+          # [skip ci] empêche le bot de se redéclencher lui-même
+          git commit -m "Warren v4.0.7: Cycle Sync [skip ci]" || echo "No changes"
           git push origin main --force

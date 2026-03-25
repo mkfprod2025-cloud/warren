@@ -61,9 +61,10 @@ def send_bingx_request(method, path, params={}):
         return {"code": -1, "msg": str(e)}
 
 def get_market_info(symbol):
-    res = send_bingx_request("GET", "/openApi/swap/v2/quote/latestPrice", {"symbol": symbol})
+    res = send_bingx_request("GET", "/openApi/swap/v2/quote/ticker", {"symbol": symbol})
     if res.get("code") == 0:
-        return float(res["data"]["price"])
+        data = res.get("data", {})
+        return float(data.get("lastPrice", data.get("price", 0)))
     return None
 
 def get_balance_info():
@@ -169,7 +170,7 @@ def update_dashboard(balance, brain_msg, positions, config, wallet_status="OK"):
     <body>
         <div class="container">
             <div class="header">
-                <h1>📈 WARREN AI <small style="font-size: 12px; color: #768390;">PRO TERMINAL v4.0 (BingX)</small></h1>
+                <h1>📈 WARREN AI <small style="font-size: 12px; color: #768390;">PRO TERMINAL v4.0.7 (BingX)</small></h1>
                 <span class="status-badge {status_class}">{status_text}</span>
             </div>
             <div class="grid">
