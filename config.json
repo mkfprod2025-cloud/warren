@@ -1,9 +1,9 @@
 {
-    "bot_running": false,
-    "demo_mode": true,
+    "bot_running": true,
+    "demo_mode": false,
     "asset": "BTC/USDT",
-    "target_yield": 25.0,
-    "deadline": "2026-03-26",
-    "macro_info": "Test de simulation Warren Profond - Objectif agressif",
-    "pnl_reset_date": "2026-03-24 10:45:00"
+    "target_yield": 15.0,
+    "deadline": "2026-04-01",
+    "macro_info": "Passage en mode RÉEL USD-M. Prudence sur le levier.",
+    "pnl_reset_date": "2026-03-25 00:00:00"
 }
