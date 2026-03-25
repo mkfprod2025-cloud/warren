@@ -1,9 +1,9 @@
 {
     "bot_running": false,
     "demo_mode": false,
-    "asset": "BTC-USDT",
+    "asset": "BTC/USDT",
     "target_yield": 15.0,
-    "deadline": "2026-04-30",
-    "macro_info": "Initialisation Migration BingX v4.0",
+    "deadline": "2026-04-01",
+    "macro_info": "RÉEL USD-M - v3.5.5.2",
     "pnl_reset_date": "2026-03-25 00:00:00"
 }
