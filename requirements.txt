@@ -2,5 +2,3 @@ google-genai
 pandas
 python-dotenv
 requests
-hmac
-hashlib
