@@ -1,4 +1,4 @@
-name: Warren Bot Runner
+name: Warren Bot Runner (BingX v4.0)
 
 on:
   push:
@@ -13,18 +13,6 @@ on:
         default: 'START'
         type: choice
         options: [START, STOP, UPDATE_CONFIG]
-      asset:
-        description: 'Actif'
-        default: 'BTC/USDT'
-      target_yield:
-        description: 'Objectif (%)'
-        default: '15.0'
-      deadline:
-        description: 'Deadline'
-        default: '2026-03-24'
-      macro_info:
-        description: 'Donnée Macro'
-        default: ''
 
 jobs:
   trade:
@@ -45,43 +33,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Handle Manual Inputs & Immediate Save
-        if: github.event_name == 'workflow_dispatch'
+      - name: Run Warren v4.0 Cycle
         env:
-          EVENT_INPUTS: ${{ toJson(github.event.inputs) }}
-        run: |
-          python -c "
-          import json, os
-          config = json.load(open('config.json'))
-          raw_inputs = os.environ.get('EVENT_INPUTS', '{}')
-          inputs = json.loads(raw_inputs) if raw_inputs and raw_inputs != 'null' else {}
-          if inputs.get('command') == 'START': config['bot_running'] = True
-          elif inputs.get('command') == 'STOP': config['bot_running'] = False
-          if inputs.get('asset'): config['asset'] = inputs['asset']
-          if inputs.get('target_yield'): config['target_yield'] = float(inputs['target_yield'])
-          if inputs.get('deadline'): config['deadline'] = inputs['deadline']
-          if inputs.get('macro_info') is not None: config['macro_info'] = inputs['macro_info']
-          json.dump(config, open('config.json', 'w'), indent=4)
-          "
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add config.json
-          git commit -m "Warren: Mise à jour manuelle de la config" || echo "No changes"
-          git push origin main --force
-
-      - name: Run Warren Bot Cycle
-        env:
-          BITMART_API_KEY: ${{ secrets.BITMART_API_KEY }}
-          BITMART_SECRET: ${{ secrets.BITMART_SECRET }}
-          BITMART_MEMO: ${{ secrets.BITMART_MEMO }}
+          BINGX_API_KEY: ${{ secrets.BINGX_API_KEY }}
+          BINGX_SECRET_KEY: ${{ secrets.BINGX_SECRET_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PROXY_URL: ${{ secrets.PROXY_URL }}
         run: python bot.py
 
-      - name: Final Commit and push (Trades & UI)
+      - name: Final Commit and push (Sync Cloud)
         if: always()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add trades_history.json positions.json config.json index.html DASHBOARD.md
-          git commit -m "Warren: Mise à jour auto (cycle terminé)" || echo "No changes"
+          git add trades_history.json positions.json config.json index.html
+          git commit -m "Warren v4.0: Cycle BingX Sync terminé" || echo "No changes"
           git push origin main --force
